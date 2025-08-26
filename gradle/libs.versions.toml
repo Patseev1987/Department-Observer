@@ -9,7 +9,6 @@ lifecycleRuntimeKtx = "2.9.2"
 activityCompose = "1.10.1"
 composeBom = "2025.08.00"
 appcompat = "1.7.1"
-material = "1.12.0"
 jetbrainsKotlinJvm = "2.2.10"
 kspVersion = "2.1.21-2.0.1"
 mockitoKotlin = "6.0.0"
@@ -19,9 +18,13 @@ coil = "3.3.0"
 navCompose = "2.9.3"
 dagger = "2.57"
 kotlinxCoroutinesTest = "1.10.2"
+datastore = "1.1.7"
+runtimeAndroid = "1.9.0"
+material = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -36,7 +39,6 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref  = "ktorVersion" }
 ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref  = "ktorVersion" }
 ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref  = "ktorVersion" }
@@ -54,6 +56,9 @@ room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-test = { module = "androidx.room:room-testing", version.ref = "room" }
+androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [plugins]

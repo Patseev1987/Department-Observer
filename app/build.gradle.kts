@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.serialization)
-    alias(libs.plugins.ktor)
     alias(libs.plugins.ksp)
 }
 
@@ -58,4 +57,13 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //modules
+    implementation(project(":modules:core:core_ui"))
+    implementation(project(":modules:core:core_api"))
+    implementation(project(":modules:features:login_feature"))
+    implementation(project(":modules:features:mechanic-feature"))
+
+    //Dagger2
+    ksp(libs.daggerCompiler)
 }
