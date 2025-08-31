@@ -2,7 +2,7 @@ package ru.bogdan.login_feature.di
 
 import dagger.Component
 import di.CoreProvider
-import ru.bogdan.login_feature.LoginViewModelFactory
+import di.ViewModelFactory
 import javax.inject.Singleton
 
 @Singleton
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 )
 interface LoginComponent : CoreProvider {
 
-    fun getViewModelFactory(): LoginViewModelFactory
+    fun getViewModelFactory(): ViewModelFactory
 
     @Component.Factory
     interface Factory {

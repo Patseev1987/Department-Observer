@@ -1,5 +1,6 @@
 package ru.bogdan.login_feature.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,6 +23,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -34,6 +36,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.Navigation
+import kotlinx.coroutines.launch
+import navigation.NavigationEvent
 import ru.bogdan.login_feature.R
 import ru.bogdan.login_feature.util.getLoginComponent
 import ui.common.AppOutlinedButton
@@ -44,12 +49,30 @@ import ui.theme.MainGradient
 
 @Composable
 fun LoginScreen(
+    onNavigateEvent: (NavigationEvent.Main) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val spacing = LocalSpacing.current
     val loginComponent = getLoginComponent()
     val viewModel: LoginViewModel = viewModel(factory = loginComponent.getViewModelFactory())
     val state = viewModel.state.collectAsState()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        viewModel.uiAction.collect { action ->
+            when (action) {
+                is LoginUiAction.GoToMainScreen -> {
+                    onNavigateEvent(NavigationEvent.Main(action.userId))
+                }
+                is LoginUiAction.ShowToast -> {
+                    scope.launch {
+                        Toast.makeText(context, action.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
     Box(
         modifier = modifier
     ) {
@@ -134,7 +157,9 @@ fun LoginScreen(
         }
         if(state.value.isLoading){
             CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center).size(50.dp)
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .size(50.dp)
             )
         }
 

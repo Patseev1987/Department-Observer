@@ -41,6 +41,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     implementation(libs.androidx.datastore)
+    api(libs.androidx.navigation.compose)
 
     //Ktor
     implementation(libs.ktor.core)
