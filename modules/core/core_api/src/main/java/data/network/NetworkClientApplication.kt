@@ -1,6 +1,5 @@
 package data.network
 
-import android.util.Log
 import data.dataStore.DataStoreManager
 import domain.user.User
 import domain.user.UserRequest
@@ -32,6 +31,8 @@ class NetWorkClientApplication @Inject constructor(
             connectTimeoutMillis = 5000
         }
 
+        install(HttpCodesHandlerPlugin)
+
         install(Logging) {
             logger = Logger.ANDROID
             level = LogLevel.BODY
@@ -41,6 +42,7 @@ class NetWorkClientApplication @Inject constructor(
                 Json {
                     ignoreUnknownKeys = true
                     prettyPrint = true
+                    isLenient = true
                 }
             )
         }
@@ -61,9 +63,21 @@ class NetWorkClientApplication @Inject constructor(
 
     suspend fun getText() = httpClient.get("$BASE_URL/").bodyAsText()
 
-    suspend fun login(login: String, password: String) = httpClient.post("$BASE_URL/login") {
-        contentType(ContentType.Application.Json)
-        setBody(UserRequest(login, password))
-        Log.i("login", "$login .  $password ")
-    }.body<User>()
+    suspend fun login(login: String, password: String): User {
+
+        val response = httpClient.post("$BASE_URL/login") {
+            contentType(ContentType.Application.Json)
+            setBody(UserRequest(login, password))
+        }
+        return response.body()
+    }
+
+    suspend fun logout() = httpClient.delete("$BASE_URL/logout")
+
+    suspend fun refreshToken() = httpClient.post("$BASE_URL/token/refresh") {
+        //TODO
+    }
+
+    suspend fun getUserById(id: String) = httpClient.get("$BASE_URL/users/$id").body<User>()
+
 }

@@ -11,5 +11,6 @@ ResourceManager {
     override fun getString(id: Int, vararg args: Any): String = context.getString(id, *args)
     override fun getStringArray(id: Int): Array<String> = context.resources.getStringArray(id)
     override fun getDrawable(id: Int): Drawable? = ContextCompat.getDrawable(context, id)
+
     override fun getColor(id: Int): Int = context.getColor(id)
 }

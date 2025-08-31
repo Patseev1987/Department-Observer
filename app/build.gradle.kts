@@ -62,7 +62,7 @@ dependencies {
     implementation(project(":modules:core:core_ui"))
     implementation(project(":modules:core:core_api"))
     implementation(project(":modules:features:login_feature"))
-    implementation(project(":modules:features:mechanic-feature"))
+    implementation(project(":modules:features:home_screen_feature"))
 
     //Dagger2
     ksp(libs.daggerCompiler)
