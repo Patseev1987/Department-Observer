@@ -1,22 +1,11 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias (libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.serialization)
-
-}
-kotlin{
-    jvmToolchain(11)
+    alias(libs.plugins.patseev.plugin.library)
 }
 
 android {
     namespace = "ru.bogdan.main_screen_feature"
-    compileSdk = 36
 
     defaultConfig {
-        minSdk = 28
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -27,26 +16,11 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
     implementation(project(path = ":modules:core:core_api"))
     implementation(project(path = ":modules:core:core_ui"))
-    ksp(libs.daggerCompiler)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
     //Coil
     implementation(libs.coil.network)
     implementation(libs.coil)
