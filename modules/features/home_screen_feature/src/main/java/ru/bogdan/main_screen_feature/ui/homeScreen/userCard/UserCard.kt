@@ -1,15 +1,23 @@
-package ru.bogdan.main_screen_feature.ui
+package ru.bogdan.main_screen_feature.ui.homeScreen.userCard
 
-import androidx.compose.foundation.Image
+import android.Manifest
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,97 +31,25 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import ru.bogdan.main_screen_feature.utils.getHomeScreenComponent
 import ui.theme.Emerald
 import ui.theme.LocalSpacing
 import ui.theme.Typography
-import ru.bogdan.main_screen_feature.R
-import ui.theme.MainGradient
-
-@Composable
-fun MainScreen(
-    userId: String,
-    modifier: Modifier = Modifier
-) {
-
-    val components = getHomeScreenComponent(userId)
-    val viewModel: HomeScreenViewModel = viewModel(factory = components.getViewModelFactory())
-    val state by viewModel.state.collectAsState()
-    Scaffold(
-        modifier = modifier,
-        topBar = { },
-        bottomBar = {
-            MainScreenBottomNavigationBar(state.navItems) {
-                viewModel.handleIntent(HomeScreenIntent.NavItemClicked(it))
-            }
-        }
-    ) { paddingValues ->
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                modifier = Modifier.fillMaxSize(),
-                painter = painterResource(R.drawable.user_card),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-            )
-            UserCard(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        brush = MainGradient
-                    )
-                    .padding(paddingValues),
-                imgUrl = "https://i.guim.co.uk/img/static/sys-images/Sport/Pix/pictures/2012/9/5/1346853660009/Alessandro-Del-Piero--008.jpg?width=465&dpr=1&s=none&crop=none",
-                imageSize = 200.dp,
-                strokeWidth = 15.dp,
-                colorNearPhoto = Emerald,
-                name = "Alessandro",
-                surname = "Del'Piero",
-                occupation = "Developer",
-                patronymic = "Ivanovich",
-            ) {
-                LazyColumn(
-                ) {
-                    repeat(10) {
-                        item {
-                            Box(
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .background(Color.Red)
-                            )
-                            Spacer(modifier = Modifier.height(10.dp))
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
 
 @Composable
 fun UserCard(
-    imgUrl: String,
-    name: String,
-    surname: String,
     modifier: Modifier = Modifier,
-    patronymic: String? = null,
-    occupation: String? = null,
+    photoContent: @Composable (BoxScope.() -> Unit)? = null,
+    nameContent: @Composable (BoxScope.() -> Unit) = {},
     imageSize: Dp = 80.dp,
     strokeWidth: Dp = 10.dp,
     colorNearPhoto: Color = Color.Blue,
-    content: @Composable BoxScope.() -> Unit
+    dataContent: @Composable BoxScope.() -> Unit
 ) {
     val spacing = LocalSpacing.current
 
@@ -147,63 +83,24 @@ fun UserCard(
                 )
             }
     ) {
-        AsyncImage(
+        Box(
             modifier = Modifier
-                .size(imageSize - strokeWidth)
-                .offset(y = strokeWidth)
-                .align(Alignment.CenterHorizontally)
-                .clip(CircleShape)
-                .background(Color.Red),
-            model = imgUrl,
-            contentDescription = "",
-            contentScale = ContentScale.Crop,
-            clipToBounds = true,
-        )
-        Spacer(modifier = Modifier.height(spacing.large))
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Row(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(
-                    text = name,
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    fontStyle = Typography.headlineMedium.fontStyle,
-                    fontSize = Typography.headlineMedium.fontSize,
-                    color = Emerald,
-                )
-                Text(
-                    text = surname,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(start = spacing.medium),
-                    fontStyle = Typography.headlineMedium.fontStyle,
-                    fontSize = Typography.headlineMedium.fontSize,
-                    color = Emerald,
-                )
-            }
-            patronymic?.let {
-                Text(
-                    text = it,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = spacing.small),
-                    fontStyle = Typography.headlineMedium.fontStyle,
-                    fontSize = Typography.headlineMedium.fontSize,
-                    color = Emerald,
-                )
-            }
+            .size(imageSize - strokeWidth)
+            .offset(y = strokeWidth)
+            .align(Alignment.CenterHorizontally)
+            .clip(CircleShape)
+            .background(Color.Red),
+            contentAlignment = Alignment.Center,
+        ){
+           photoContent?.invoke(this)
         }
-        occupation?.let {
-            Text(
-                text = it,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = spacing.small),
-                color = Emerald,
-                fontStyle = Typography.displaySmall.fontStyle,
-                fontSize = Typography.displaySmall.fontSize,
-                fontWeight = FontWeight.Bold,
-            )
+
+        Spacer(modifier = Modifier.height(spacing.large))
+
+        Box(
+            modifier = Modifier.fillMaxWidth().heightIn(min = spacing.extraLarge, max = 400.dp),
+        ){
+            nameContent.invoke(this)
         }
 
         Box(
@@ -214,7 +111,7 @@ fun UserCard(
                     start = strokeWidth + spacing.medium,
                     end = strokeWidth + spacing.medium,
                     bottom = strokeWidth + spacing.medium,
-                    top =  spacing.medium,
+                    top = spacing.medium,
                 )
                 .background(
                     color = Color.White,
@@ -228,7 +125,7 @@ fun UserCard(
                 .padding(spacing.medium)
 
         ) {
-            content()
+            dataContent.invoke(this)
         }
     }
 }
@@ -240,18 +137,62 @@ private fun UserCardPreview(
 ) {
     UserCard(
         modifier = Modifier.background(Color.Black),
-        imgUrl = "https://thumbsd.dreamstime.com/b/black-construction-worker-18075617.jpg",
+        photoContent = {
+        },
         imageSize = 200.dp,
         strokeWidth = 30.dp,
         colorNearPhoto = Emerald.copy(0.8f),
-        name = "Alessandro",
-        surname = "Del'Piero",
-        patronymic = "Ivanovich",
-        occupation = "Developer",
-    ) {
+        dataContent = {
 
-    }
+        },
+        nameContent = {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text(
+                        text = "Alessandro",
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        fontStyle = Typography.headlineMedium.fontStyle,
+                        fontSize = Typography.headlineMedium.fontSize,
+                        color = Emerald,
+                    )
+                    Text(
+                        text = "Del'Piero",
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 16.dp),
+                        fontStyle = Typography.headlineMedium.fontStyle,
+                        fontSize = Typography.headlineMedium.fontSize,
+                        color = Emerald,
+                    )
+                }
+
+                Text(
+                    text = "Ivanovich",
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 8.dp),
+                    fontStyle = Typography.headlineMedium.fontStyle,
+                    fontSize = Typography.headlineMedium.fontSize,
+                    color = Emerald,
+                )
+
+                Text(
+                    text = "Developer",
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 8.dp),
+                    color = Emerald,
+                    fontStyle = Typography.displaySmall.fontStyle,
+                    fontSize = Typography.displaySmall.fontSize,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+        }
+    )
 }
+
 
 
 fun DrawScope.drawUserCardFrame(
@@ -442,29 +383,4 @@ fun DrawScope.drawUserCardFrame(
         ),
         style = Stroke(width = strokeWidth.toPx())
     )
-}
-
-@Composable
-fun MainScreenBottomNavigationBar(
-    navigationItems: List<ObserverNavigationItem>,
-    onClick: (ObserverNavigationItem) -> Unit
-) {
-    NavigationBar(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        navigationItems.forEach { navigationItem ->
-            NavigationBarItem(
-                selected = true,
-                onClick = {
-                    onClick.invoke(navigationItem)
-                },
-                icon = {
-                    Icon(
-                        painter = painterResource(navigationItem.drawableId),
-                        contentDescription = navigationItem.title,
-                    )
-                }
-            )
-        }
-    }
 }
