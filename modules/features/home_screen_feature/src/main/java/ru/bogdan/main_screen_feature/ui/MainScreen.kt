@@ -35,8 +35,6 @@ import ui.theme.Emerald
 import ui.theme.LocalSpacing
 import ui.theme.Typography
 import ru.bogdan.main_screen_feature.R
-import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenIntent
-import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenViewModel
 import ui.theme.MainGradient
 
 @Composable

@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.Navigation
 import kotlinx.coroutines.launch
 import navigation.NavigationEvent
 import ru.bogdan.login_feature.R
@@ -64,6 +63,7 @@ fun LoginScreen(
                 is LoginUiAction.GoToMainScreen -> {
                     onNavigateEvent(NavigationEvent.Main(action.userId))
                 }
+
                 is LoginUiAction.ShowToast -> {
                     scope.launch {
                         Toast.makeText(context, action.message, Toast.LENGTH_SHORT).show()
@@ -147,7 +147,7 @@ fun LoginScreen(
             ) {
                 AppOutlinedButton(
                     onClick = {
-                            viewModel.handleIntent(LoginIntent.LogInPressed)
+                        viewModel.handleIntent(LoginIntent.LogInPressed)
                     }, color = Emerald
                 ) {
                     Text("Sing in", color = Emerald, fontSize = 35.sp)
@@ -155,7 +155,7 @@ fun LoginScreen(
             }
 
         }
-        if(state.value.isLoading){
+        if (state.value.isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -215,8 +215,8 @@ fun PasswordTextField(
             }
             BasicTextField(
                 modifier = Modifier.onFocusChanged { focusState ->
-                        isFocused = focusState.isFocused
-                    },
+                    isFocused = focusState.isFocused
+                },
                 value = value,
                 onValueChange = onValueChange,
                 singleLine = true,
@@ -302,8 +302,8 @@ fun LoginTextField(
 
             BasicTextField(
                 modifier = Modifier.onFocusChanged { focusState ->
-                        isFocused = focusState.isFocused
-                    },
+                    isFocused = focusState.isFocused
+                },
                 value = value,
                 onValueChange = onValueChange,
                 singleLine = true,

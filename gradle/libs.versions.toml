@@ -5,6 +5,7 @@ coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
+ktorClientAuth = "3.2.3"
 lifecycleRuntimeKtx = "2.9.3"
 activityCompose = "1.10.1"
 composeBom = "2025.08.01"
@@ -16,11 +17,19 @@ room = "2.7.2"
 ktorVersion = "3.2.3"
 coil = "3.3.0"
 navCompose = "2.9.3"
-dagger = "2.57"
+dagger = "2.57.1"
 kotlinxCoroutinesTest = "1.10.2"
 datastore = "1.1.7"
 runtimeAndroid = "1.9.0"
-material = "1.12.0"
+material = "1.13.0"
+composePlugin="1.8.2"
+
+java="17"
+compileSdk="36"
+targetSdk="36"
+minSdk="28"
+versionCode = "1"
+versionName = "1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,6 +48,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktorVersion" }
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref  = "ktorVersion" }
 ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref  = "ktorVersion" }
 ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref  = "ktorVersion" }
@@ -60,14 +70,23 @@ androidx-datastore = { module = "androidx.datastore:datastore-preferences", vers
 androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
+gradleplugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+gradleplugin-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "composePlugin" }
+gradleplugin-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
+gradleplugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradleplugin-api = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktorVersion" }
+
+
+patseev-plugin-app = { id = "patseev-appPlugin"}
+patseev-plugin-library = { id = "patseev-libraryPlugin"}
 
