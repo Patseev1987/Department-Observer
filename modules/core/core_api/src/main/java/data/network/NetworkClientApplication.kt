@@ -1,6 +1,7 @@
 package data.network
 
 import data.dataStore.DataStoreManager
+import domain.mechanic.Machine
 import domain.user.User
 import domain.user.UserRequest
 import io.ktor.client.*
@@ -79,5 +80,7 @@ class NetWorkClientApplication @Inject constructor(
     }
 
     suspend fun getUserById(id: String) = httpClient.get("$BASE_URL/users/$id").body<User>()
+
+    suspend fun getMachines() = httpClient.get("$BASE_URL/machines").body<List<Machine>>()
 
 }

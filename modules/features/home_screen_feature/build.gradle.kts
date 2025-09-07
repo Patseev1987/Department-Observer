@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.patseev.plugin.library)
 }
 
+
 android {
     namespace = "ru.bogdan.main_screen_feature"
 
@@ -15,6 +16,9 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+    }
+    kotlinOptions {
+        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
     }
 }
 

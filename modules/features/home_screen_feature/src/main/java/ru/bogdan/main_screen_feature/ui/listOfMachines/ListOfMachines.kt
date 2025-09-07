@@ -10,26 +10,3 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import domain.mechanic.Machine
 
-@Composable
-fun ListOfMachines(
-    machines: List<Machine>,
-    modifier: Modifier = Modifier,
-    paddingValues: PaddingValues = PaddingValues(),
-) {
-    Column(
-        modifier = modifier.padding(paddingValues),
-
-    ) {
-        Row(
-            modifier = Modifier. fillMaxWidth()
-        ){
-
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewListOfMachines() {
-    ListOfMachines()
-}

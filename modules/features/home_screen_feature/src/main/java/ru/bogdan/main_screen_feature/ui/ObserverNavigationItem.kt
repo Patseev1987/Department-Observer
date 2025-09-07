@@ -16,7 +16,12 @@ sealed class ObserverNavigationItem(
         drawableId: Int
     ): ObserverNavigationItem(title,  drawableId)
 
-    class WarehousNameItem(
+    class WarehousItem(
+        title: String,
+        drawableId: Int
+    ): ObserverNavigationItem(title,  drawableId)
+
+    class MachinesItem(
         title: String,
         drawableId: Int
     ): ObserverNavigationItem(title,  drawableId)

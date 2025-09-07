@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.network.NetworkRepository
 import data.resorseMenager.ResourceManager
+import domain.mechanic.Machine
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -21,6 +22,10 @@ class HomeScreenViewModel @Inject constructor(
     private val networkRepository: NetworkRepository,
     @UserId private val userId: String
 ) : ViewModel() {
+
+    private val machines:List<Machine>
+
+
     private val _state = MutableStateFlow(HomeScreenState())
     val state = _state.asStateFlow()
 
@@ -54,7 +59,6 @@ class HomeScreenViewModel @Inject constructor(
             }
             .onFailure {
                 _uiAction.emit(HomeScreenUiAction.ShowToast(it.message.toString()))
-
             }
     }
 
@@ -63,15 +67,15 @@ class HomeScreenViewModel @Inject constructor(
             title = manager.getString(R.string.home),
             drawableId = R.drawable.home_screen
         ),
-        ObserverNavigationItem.WarehousNameItem(
+        ObserverNavigationItem.MachinesItem(
             title = manager.getString(R.string.machines),
             drawableId = R.drawable.machines
         ),
-        ObserverNavigationItem.WarehousNameItem(
+        ObserverNavigationItem.WarehousItem(
             title = manager.getString(R.string.mechanic_warehouse),
             drawableId = R.drawable.mechanic_warehouse
         ),
-        ObserverNavigationItem.WarehousNameItem(
+        ObserverNavigationItem.MapItem(
             title = manager.getString(R.string.department_map),
             drawableId = R.drawable.department_map
         )

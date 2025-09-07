@@ -1,5 +1,6 @@
 package data.network
 
+import domain.mechanic.Machine
 import domain.user.User
 import java.security.MessageDigest
 import javax.inject.Inject
@@ -28,5 +29,9 @@ class NetworkRepositoryImpl @Inject constructor(
 
     override suspend fun getUserById(userId: String): Result<User> {
         return runCatching { client.getUserById(userId) }
+    }
+
+    override suspend fun getMachines(): Result<List<Machine>> {
+        return runCatching { client.getMachines() }
     }
 }
