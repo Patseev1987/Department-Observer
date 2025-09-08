@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import navigation.NavigationEvent
+import ru.bogdan.departmentobserver.navigation.AppNavGraph
 import ru.bogdan.login_feature.ui.LoginScreen
 import ru.bogdan.main_screen_feature.ui.MainScreen
 import ui.theme.DepartmentObserverTheme
@@ -25,23 +26,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             DepartmentObserverTheme {
-                NavHost(navController, startDestination = NavigationEvent.LoginScreen) {
-                    composable<NavigationEvent.LoginScreen> {
-                        LoginScreen(
-                            onNavigateEvent = {event  ->
-                                navController.navigate(event)
-                            }
-                        )
-                    }
-
-                    navigation<NavigationEvent.Main>(startDestination = NavigationEvent.Home()) {
-                        composable<NavigationEvent.Home> {
-                            val id = it.toRoute<NavigationEvent.Home>().userId
-                            MainScreen(
-                                userId = id
-                            )
-                        }
-                    }
+                Scaffold {
+                    AppNavGraph(
+                        navController
+                    )
                 }
             }
         }

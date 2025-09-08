@@ -1,10 +1,11 @@
-package ru.bogdan.main_screen_feature.ui
+package ru.bogdan.main_screen_feature.ui.homeScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.network.NetworkRepository
 import data.resorseMenager.ResourceManager
 import domain.mechanic.Machine
+import domain.mechanic.MachineState
 import domain.user.User
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -13,13 +14,11 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.bogdan.main_screen_feature.R
 import ru.bogdan.main_screen_feature.di.UserId
-import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenIntent
-import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenState
-import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenUiAction
 import utils.SingleSharedFlow
 import javax.inject.Inject
+import ru.bogdan.main_screen_feature.R
+import ru.bogdan.main_screen_feature.ui.homeScreen.InfoAboutMachines.Companion.getColor
 
 class HomeScreenViewModel @Inject constructor(
     private val manager: ResourceManager,
@@ -56,45 +55,50 @@ class HomeScreenViewModel @Inject constructor(
         user = tempUser.await()
         machines = tempMachines.await()
 
-        if (user.isSuccess && machines.isSuccess) {
-            _state.update {
-                it.copy(
-                    name = user.getOrDefault(User.NONE).name,
-                    surname = user.getOrDefault(User.NONE).surname,
-                    patronymic = user.getOrDefault(User.NONE).patronymic,
-                    photo = user.getOrDefault(User.NONE).photoUrl,
-                    navItems = getNavigateItem(),
-                    isLoading = false,
-                    machines = machines.getOrDefault(listOf(Machine.NONE)),
-                )
+        user.onSuccess { user ->
+            machines.onSuccess { machines ->
+                _state.update {
+                    it.copy(
+                        name = user.name,
+                        surname = user.surname,
+                        patronymic = user.patronymic,
+                        photo = user.photoUrl,
+                        isLoading = false,
+                        infoAboutMachines = getInfoAboutMachines(machines),
+                        machines = machines,
+                    )
+                }
             }
-        } else {
-            _state.update { it.copy(isLoading = false) }
-            user.exceptionOrNull()?.let{
-                _uiAction.emit(HomeScreenUiAction.ShowToast(it.message ?: ""))
-            }
-            machines.exceptionOrNull()?.let{
-                _uiAction.emit(HomeScreenUiAction.ShowToast(it.message ?: ""))
-            }
+                .onFailure { throwable ->
+                    _uiAction.emit(HomeScreenUiAction.ShowToast(throwable.message ?: ""))
+                }
         }
+            .onFailure { throwable ->
+                _uiAction.emit(HomeScreenUiAction.ShowToast(throwable.message ?: ""))
+            }
     }
 
-    private fun getNavigateItem(): List<ObserverNavigationItem> = listOf(
-        ObserverNavigationItem.HomeItem(
-            title = manager.getString(R.string.home),
-            drawableId = R.drawable.home_screen
-        ),
-        ObserverNavigationItem.MachinesItem(
-            title = manager.getString(R.string.machines),
-            drawableId = R.drawable.machines
-        ),
-        ObserverNavigationItem.WarehousItem(
-            title = manager.getString(R.string.mechanic_warehouse),
-            drawableId = R.drawable.mechanic_warehouse
-        ),
-        ObserverNavigationItem.MapItem(
-            title = manager.getString(R.string.department_map),
-            drawableId = R.drawable.department_map
-        )
-    )
+    private fun getInfoAboutMachines(machines: List<Machine>): List<InfoAboutMachines>{
+        val tempInfo = mutableListOf<InfoAboutMachines>()
+        val angle = WHOLE_CIRCLE/machines.size
+        MachineState.entries.forEach { state ->
+            tempInfo.add(InfoAboutMachines(
+                state = state,
+                percentage = machines.count { it.state == state } * angle,
+                title = getTitle(state),
+                color = state.getColor(),
+            ))
+        }
+        return tempInfo
+    }
+
+    private fun getTitle(state: MachineState): String = when (state) {
+        MachineState.WORKING -> manager.getString(R.string.working)
+        MachineState.STOPPED -> manager.getString(R.string.pause)
+        MachineState.REPAIR -> manager.getString(R.string.repair)
+    }
+
+    companion object {
+        const val WHOLE_CIRCLE = 360f
+    }
 }

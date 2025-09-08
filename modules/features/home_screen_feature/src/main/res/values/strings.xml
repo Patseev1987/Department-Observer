@@ -1,7 +1,5 @@
 <resources>
-    <string name="home">Home</string>
-    <string name="warehouse">Warehouse</string>
-    <string name="mechanic_warehouse">Mechanic warehouse</string>
-    <string name="machines">Machines</string>
-    <string name="department_map">Map</string>
+    <string name="repair">Repair</string>
+    <string name="working">Working</string>
+    <string name="pause">Pause</string>
 </resources>

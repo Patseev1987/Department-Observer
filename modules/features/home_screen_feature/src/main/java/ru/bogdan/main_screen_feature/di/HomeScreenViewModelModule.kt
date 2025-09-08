@@ -5,7 +5,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import di.ViewModelKey
-import ru.bogdan.main_screen_feature.ui.HomeScreenViewModel
+import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenViewModel
 
 @Module
 interface HomeScreenViewModelModule {

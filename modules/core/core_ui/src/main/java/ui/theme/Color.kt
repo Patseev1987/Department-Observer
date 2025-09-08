@@ -18,7 +18,7 @@ val NotWhite = Color(0xFFEFEFEF)
 val MainGradient = Brush.radialGradient(
     listOf(
         Color.Black,
-        Color.Black.copy(alpha = 0.25f),
+        Color.Black.copy(alpha = 0.6f),
         Color.Black,
         Color.Black,
         Color.Transparent,

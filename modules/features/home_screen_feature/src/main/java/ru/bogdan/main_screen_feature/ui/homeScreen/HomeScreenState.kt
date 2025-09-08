@@ -1,8 +1,11 @@
 package ru.bogdan.main_screen_feature.ui.homeScreen
 
+import androidx.compose.ui.graphics.Color
 import domain.mechanic.Machine
+import domain.mechanic.MachineState
 import domain.user.Role
-import ru.bogdan.main_screen_feature.ui.ObserverNavigationItem
+import ui.theme.LightRed
+import ui.theme.Tiffany
 
 data class HomeScreenState(
     val photo: String? = null,
@@ -12,6 +15,22 @@ data class HomeScreenState(
     val role: Role = Role.MECHANIC,
     val isLoading: Boolean = true,
     val error: Throwable? = null,
-    val navItems: List<ObserverNavigationItem> = emptyList(),
+    val infoAboutMachines: List<InfoAboutMachines> = listOf(),
     val machines: List<Machine> = emptyList()
 )
+
+data class InfoAboutMachines(
+    val state: MachineState = MachineState.REPAIR,
+    val percentage: Float = 0F,
+    val title: String = "",
+    val count: Int = 0,
+    val color: Color = Color.Red,
+){
+    companion object{
+        fun MachineState.getColor(): Color = when(this){
+            MachineState.WORKING -> Tiffany
+            MachineState.STOPPED -> Color.Gray
+            MachineState.REPAIR -> LightRed
+        }
+    }
+}

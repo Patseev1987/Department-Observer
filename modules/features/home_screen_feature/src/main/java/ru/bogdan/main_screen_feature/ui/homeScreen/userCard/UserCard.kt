@@ -1,19 +1,7 @@
 package ru.bogdan.main_screen_feature.ui.homeScreen.userCard
 
-import android.Manifest
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -30,12 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import ui.theme.Emerald
 import ui.theme.LocalSpacing
 import ui.theme.Typography
@@ -43,13 +29,13 @@ import ui.theme.Typography
 
 @Composable
 fun UserCard(
+    dataContent: @Composable BoxScope.() -> Unit,
     modifier: Modifier = Modifier,
-    photoContent: @Composable (BoxScope.() -> Unit)? = null,
-    nameContent: @Composable (BoxScope.() -> Unit) = {},
     imageSize: Dp = 80.dp,
     strokeWidth: Dp = 10.dp,
     colorNearPhoto: Color = Color.Blue,
-    dataContent: @Composable BoxScope.() -> Unit
+    photoContent: @Composable (BoxScope.() -> Unit)? = null,
+    nameContent: @Composable (BoxScope.() -> Unit) = {},
 ) {
     val spacing = LocalSpacing.current
 
@@ -85,21 +71,23 @@ fun UserCard(
     ) {
         Box(
             modifier = Modifier
-            .size(imageSize - strokeWidth)
-            .offset(y = strokeWidth)
-            .align(Alignment.CenterHorizontally)
-            .clip(CircleShape)
-            .background(Color.Red),
+                .size(imageSize - strokeWidth)
+                .offset(y = strokeWidth)
+                .align(Alignment.CenterHorizontally)
+                .clip(CircleShape)
+                .background(Color.Red),
             contentAlignment = Alignment.Center,
-        ){
-           photoContent?.invoke(this)
+        ) {
+            photoContent?.invoke(this)
         }
 
         Spacer(modifier = Modifier.height(spacing.large))
 
         Box(
-            modifier = Modifier.fillMaxWidth().heightIn(min = spacing.extraLarge, max = 400.dp),
-        ){
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = spacing.extraLarge, max = 400.dp),
+        ) {
             nameContent.invoke(this)
         }
 
@@ -114,7 +102,7 @@ fun UserCard(
                     top = spacing.medium,
                 )
                 .background(
-                    color = Color.White,
+                    color = Color.Transparent,
                     shape = RoundedCornerShape(
                         topStart = spacing.medium,
                         topEnd = spacing.medium,
@@ -143,7 +131,7 @@ private fun UserCardPreview(
         strokeWidth = 30.dp,
         colorNearPhoto = Emerald.copy(0.8f),
         dataContent = {
-
+            Box(modifier = Modifier.size(40.dp).background(Color.White))
         },
         nameContent = {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -192,7 +180,6 @@ private fun UserCardPreview(
         }
     )
 }
-
 
 
 fun DrawScope.drawUserCardFrame(
@@ -372,7 +359,6 @@ fun DrawScope.drawUserCardFrame(
                 y = imageSize.toPx() / 2 + strokeWidth.toPx() / 2
             ),
             radius = imageSize.toPx() / 2 + strokeWidth.toPx() / 2,
-            // colors = listOf(colorNearPhoto,colorNearPhoto,colorNearPhoto,colorNearPhoto, Color.Blue),
             colorStops = arrayOf(1 - percentageBigCircle to colorNearPhoto, 1f to Color.Transparent),
             tileMode = TileMode.Clamp
         ),

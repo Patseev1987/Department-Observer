@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 import navigation.NavigationEvent
 import ru.bogdan.login_feature.R
 import ru.bogdan.login_feature.util.getLoginComponent
-import ui.common.AppOutlinedButton
+import ui.common.button.AppOutlinedButton
 import ui.theme.Emerald
 import ui.theme.LocalSpacing
 import ui.theme.MainGradient

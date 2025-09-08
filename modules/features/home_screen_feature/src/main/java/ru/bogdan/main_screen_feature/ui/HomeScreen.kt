@@ -6,32 +6,19 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
@@ -39,6 +26,7 @@ import ru.bogdan.main_screen_feature.R
 import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenIntent
 import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenState
 import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenUiAction
+import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenViewModel
 import ru.bogdan.main_screen_feature.ui.homeScreen.userCard.UserCard
 import ru.bogdan.main_screen_feature.utils.getHomeScreenComponent
 import ui.theme.Emerald
@@ -59,9 +47,6 @@ fun MainScreen(
         modifier = modifier,
         topBar = { },
         bottomBar = {
-            MainScreenBottomNavigationBar(state.value.navItems) {
-                viewModel.handleIntent(HomeScreenIntent.NavItemClicked(it))
-            }
         }
     ) { paddingValues ->
         val context = LocalContext.current
@@ -113,16 +98,16 @@ fun MainScreen(
                 },
                 nameContent = {
                     UserName(state)
-                }
+                },
 
-            ) {
+             dataContent = {
                 LazyColumn(
                 ) {
                     repeat(10) {
                         item {
                             Box(
                                 modifier = Modifier
-                                    .size(100.dp)
+                                    .size(800.dp)
                                     .background(Color.Red)
                             )
                             Spacer(modifier = Modifier.height(10.dp))
@@ -130,6 +115,7 @@ fun MainScreen(
                     }
                 }
             }
+            )
         }
     }
 }
