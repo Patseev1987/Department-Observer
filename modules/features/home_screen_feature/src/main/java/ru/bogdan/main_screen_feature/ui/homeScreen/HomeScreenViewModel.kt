@@ -82,11 +82,13 @@ class HomeScreenViewModel @Inject constructor(
         val tempInfo = mutableListOf<InfoAboutMachines>()
         val angle = WHOLE_CIRCLE/machines.size
         MachineState.entries.forEach { state ->
+            val count = machines.count { it.state == state }
             tempInfo.add(InfoAboutMachines(
                 state = state,
-                percentage = machines.count { it.state == state } * angle,
+                percentage = count * angle,
                 title = getTitle(state),
                 color = state.getColor(),
+                count = count
             ))
         }
         return tempInfo

@@ -1,10 +1,13 @@
 package domain.department
 
-import domain.mechanic.Machine
+import kotlinx.serialization.Serializable
 
-data class Department(
-    val id: String,
-    val name: String,
-    val schema: Schema,
-    val machines: List<Machine>,
-)
+@Serializable
+enum class Department(name: String) {
+    MAIN_PART_WAREHOUSE("Main warehouse of parts"),
+    MAIN_OILS_WAREHOUSE("Main warehouse of oils"),
+    UTILIZATION("Utilization"),
+    DEPARTMENT_1("Department 1"),
+    DEPARTMENT_2("Department 2"),
+    DEPARTMENT_3("Department 3")
+}

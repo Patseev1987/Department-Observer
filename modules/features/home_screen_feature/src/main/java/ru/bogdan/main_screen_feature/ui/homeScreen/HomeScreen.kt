@@ -17,6 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -136,6 +140,16 @@ fun PaiChart(
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Text(
+            modifier = Modifier.padding(top =spacing.small),
+            text = stringResource(R.string.info),
+            fontSize = 32.sp,
+            textAlign = TextAlign.Center,
+            lineHeight = 46.sp,
+            fontWeight = Bold,
+            fontFamily = FontFamily.Cursive,
+        )
+        Spacer(Modifier.height(spacing.medium))
         Row(
             modifier = modifier.padding(spacing.small),
             verticalAlignment = Alignment.CenterVertically,
@@ -160,8 +174,9 @@ fun PaiChart(
                 modifier = Modifier.weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
                 state.value.infoAboutMachines.forEach { info ->
-                    TextWithColor(
+                    TextWithCircle(
                         modifier = Modifier.fillMaxWidth(),
                         title = info.title,
                         color = info.color,
@@ -175,7 +190,7 @@ fun PaiChart(
 }
 
 @Composable
-fun TextWithColor(title: String, count: Int, color: Color, modifier: Modifier = Modifier) {
+fun TextWithCircle(title: String, count: Int, color: Color, modifier: Modifier = Modifier) {
     val spacing = LocalSpacing.current
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Box(modifier = Modifier
@@ -189,3 +204,4 @@ fun TextWithColor(title: String, count: Int, color: Color, modifier: Modifier = 
         )
     }
 }
+
