@@ -9,14 +9,15 @@ interface DataStoreManager {
 
     val refreshToken: Flow<String?>
 
-    suspend fun saveAccessTokens(accessToken: String?, refreshToken: String?)
+    val userId: Flow<String?>
+
+    suspend fun saveAccessTokens(accessToken: String?, refreshToken: String?, userId: String?)
 
     suspend fun clear()
 
     companion object {
-        const val dataStoreFile: String = "securePref"
+        const val dataStoreFile: String = "appDataStore"
         const val KEY_PROVIDER = "AndroidKeyStore"
-        const val AES_ALGORITHM = "AES"
         const val AES_KEY_ALIAS = "AES_ALIAS"
         const val AES_MODE = "AES/CBC/PKCS7Padding"
 

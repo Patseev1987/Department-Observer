@@ -1,6 +1,10 @@
 package ru.bogdan.core_ui.ui.theme
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -32,3 +36,51 @@ val Typography = Typography(
     )
     */
 )
+
+
+data class AppTypography(
+    val headline1: TextStyle = TextStyle(
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Bold,
+        fontSize = 35.sp,
+    ),
+
+    val headlineCursiveNormal: TextStyle = TextStyle(
+        fontFamily = FontFamily.Cursive,
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp,
+    ),
+
+    val headlineCursiveSmall: TextStyle = TextStyle(
+        fontFamily = FontFamily.Cursive,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
+    ),
+    val headlineCursiveLarge: TextStyle = TextStyle(
+        fontFamily = FontFamily.Cursive,
+        fontWeight = FontWeight.Normal,
+        fontSize = 32.sp,
+    ),
+
+    val bodyNormal: TextStyle = TextStyle(
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp,
+    ),
+
+    val bodyLarge: TextStyle = TextStyle(
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Normal,
+        fontSize = 30.sp,
+    ),
+
+    val bodySmall: TextStyle = TextStyle(
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+    ),
+)
+
+val LocalAppTypography = compositionLocalOf {
+    AppTypography()
+}

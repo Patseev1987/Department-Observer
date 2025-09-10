@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,17 +38,18 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import navigation.NavigationEvent
+import ru.bogdan.core_ui.R
 import ru.bogdan.core_ui.ui.common.box.BoxWithBackgroundPhoto
 import ru.bogdan.core_ui.ui.common.button.AppOutlinedButton
+import ru.bogdan.core_ui.ui.common.loadingModifier.loadingShimmer
 import ru.bogdan.core_ui.ui.theme.Emerald
 import ru.bogdan.core_ui.ui.theme.LocalSpacing
 import ru.bogdan.login_feature.util.getLoginComponent
-import ru.bogdan.core_ui.R
 
 
 @Composable
 fun LoginScreen(
-    onNavigateEvent: (NavigationEvent.Main) -> Unit,
+    onNavigateEvent: (NavigationEvent.Home) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val spacing = LocalSpacing.current
@@ -60,7 +62,7 @@ fun LoginScreen(
         viewModel.uiAction.collect { action ->
             when (action) {
                 is LoginUiAction.GoToMainScreen -> {
-                    onNavigateEvent(NavigationEvent.Main(action.userId))
+                    onNavigateEvent(NavigationEvent.Home)
                 }
 
                 is LoginUiAction.ShowToast -> {
@@ -78,10 +80,10 @@ fun LoginScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
+                .loadingShimmer(showShimmer = state.value.isLoading, color = Emerald, gradientWidth = 40.dp.value)
                 .background(color = Color.Transparent)
                 .padding(spacing.medium),
         ) {
-
 
             Box(
                 modifier = Modifier
@@ -90,7 +92,6 @@ fun LoginScreen(
             ) {
 
                 Image(
-
                     painter = painterResource(R.drawable.icon),
                     contentDescription = null,
                     modifier = Modifier
@@ -139,13 +140,6 @@ fun LoginScreen(
                 }
             }
 
-        }
-        if (state.value.isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .size(50.dp)
-            )
         }
     }
 }
@@ -217,6 +211,7 @@ fun PasswordTextField(
                     fontFamily = fontFamily,
                     color = mainColor,
                 ),
+                cursorBrush = SolidColor(Color.White),
             )
         }
         Box(
@@ -303,6 +298,7 @@ fun LoginTextField(
                     fontFamily = fontFamily,
                     color = if (value.isNotBlank() || isFocused) mainColor else Color.LightGray
                 ),
+                cursorBrush = SolidColor(Color.White),
             )
         }
         Box(

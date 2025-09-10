@@ -1,5 +1,6 @@
 package data.network.models.mechanic
 
+import domain.mechanic.MachineModel
 import domain.mechanic.MachineState
 import domain.mechanic.MachineType
 import kotlinx.serialization.SerialName
@@ -12,26 +13,28 @@ data class MachineWeb(
     @SerialName("image_url")
     val imageUrl: String? = null,
     val description: String = "",
+    val model: MachineModel,
     val state: MachineState,
     val type: MachineType,
     @SerialName("year_of_manufactured")
     val yearOfManufacture: Int,
-    val parts: Map<PartOfMachineWeb,Int>,
+    val parts: Map<PartOfMachineWeb, Int>,
     val docs: List<MachineDocumentWeb>,
-    val oils: Map<OilWeb,Int>,
+    val oils: Map<OilWeb, Int>,
 ) {
     companion object Companion {
-        val NONE =   MachineWeb(
-                id = "111",
-        name = "Machine 1",
-        imageUrl = "https://5.imimg.com/data5/SELLER/Default/2022/6/JR/EJ/SE/140760167/automatic-turning-lathe-machine-500x500-500x500.jpg",
-        description = "Turning machine",
-        state = MachineState.WORKING,
-        type = MachineType.TURNING,
-        docs = emptyList(),
-        oils = mapOf(),
-        parts = mapOf(),
-        yearOfManufacture = 1947
+        val NONE = MachineWeb(
+            id = "111",
+            name = "Machine 1",
+            imageUrl = "https://5.imimg.com/data5/SELLER/Default/2022/6/JR/EJ/SE/140760167/automatic-turning-lathe-machine-500x500-500x500.jpg",
+            description = "Turning machine",
+            state = MachineState.WORKING,
+            type = MachineType.TURNING,
+            docs = emptyList(),
+            oils = mapOf(),
+            parts = mapOf(),
+            yearOfManufacture = 1977,
+            model = MachineModel.T_16K20
         )
     }
 }

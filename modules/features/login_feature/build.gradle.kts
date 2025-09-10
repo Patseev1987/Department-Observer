@@ -6,11 +6,6 @@ plugins {
 android {
     namespace = "ru.bogdan.login_feature"
 
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -18,6 +13,10 @@ android {
         }
     }
 
+    defaultConfig{
+        missingDimensionStrategy("environment","prod")
+        missingDimensionStrategy("environment","dev")
+    }
 }
 
 dependencies {

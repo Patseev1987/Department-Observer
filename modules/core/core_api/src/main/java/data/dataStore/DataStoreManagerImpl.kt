@@ -69,23 +69,34 @@ class DataStoreManagerImpl @Inject constructor(private val context: Context) : D
 
     override val accessToken: Flow<String>
         get() = context.dataStore.data.map { preferences ->
-            val accessToken = preferences[ACCESS_TOKEN] ?: ""
-            if (accessToken.isNotEmpty()) {
+            val accessToken = preferences[ACCESS_TOKEN] ?: EMPTY_STRING
+            if (accessToken.isNotBlank()) {
                 decrypt(accessToken)
-            } else ""
+            } else EMPTY_STRING
         }
     override val refreshToken: Flow<String>
         get() = context.dataStore.data.map { preferences ->
-            val refreshToken = preferences[REFRESH_TOKEN] ?: ""
-            if (refreshToken.isNotEmpty()) {
+            val refreshToken = preferences[REFRESH_TOKEN] ?: EMPTY_STRING
+            if (refreshToken.isNotBlank()) {
                 decrypt(refreshToken)
-            } else ""
+            } else EMPTY_STRING
         }
 
-    override suspend fun saveAccessTokens(accessToken: String?, refreshToken: String?) {
+    override val userId: Flow<String?>
+        get() = context.dataStore.data.map { preferences ->
+            val userId = preferences[USER_ID] ?: EMPTY_STRING
+            if(userId.isNotBlank()){
+                decrypt(userId)
+            } else {
+                EMPTY_STRING
+            }
+        }
+
+    override suspend fun saveAccessTokens(accessToken: String?, refreshToken: String?, userId: String?) {
         context.dataStore.edit { preferences ->
             accessToken?.let { preferences[ACCESS_TOKEN] = encrypt(it) }
             refreshToken?.let { preferences[REFRESH_TOKEN] = encrypt(it) }
+            userId?.let { preferences[USER_ID] = encrypt(it) }
         }
     }
 
@@ -95,9 +106,12 @@ class DataStoreManagerImpl @Inject constructor(private val context: Context) : D
         }
     }
 
+
     companion object {
         private val Context.dataStore by preferencesDataStore(name = dataStoreFile)
         private val ACCESS_TOKEN = stringPreferencesKey("key_access_token")
         private val REFRESH_TOKEN = stringPreferencesKey("key_refresh_token")
+        private val USER_ID = stringPreferencesKey("user_id")
+        private const val EMPTY_STRING = ""
     }
 }

@@ -1,10 +1,9 @@
 package ru.bogdan.main_screen_feature.ui.homeScreen
 
 import androidx.compose.ui.graphics.Color
-import domain.info.Residue
+import domain.info.Info
 import domain.mechanic.Machine
 import domain.mechanic.MachineState
-import domain.user.Role
 import ru.bogdan.core_ui.ui.theme.LightRed
 import ru.bogdan.core_ui.ui.theme.Tiffany
 
@@ -13,14 +12,15 @@ data class HomeScreenState(
     val name: String = "",
     val surname: String = "",
     val patronymic: String = "",
-    val role: Role = Role.MECHANIC,
+    val role: String = "",
     val isLoading: Boolean = true,
     val error: Throwable? = null,
     val infoAboutMachines: List<InfoAboutMachines> = listOf(),
     val machines: List<Machine> = emptyList(),
     val isShowRepairList: Boolean = false,
+    val isShowInfoList: Boolean = false,
     val repairList: List<Machine> = emptyList(),
-    val info: List<Residue> = emptyList()
+    val info: List<Info> = emptyList()
 )
 
 data class InfoAboutMachines(
@@ -29,12 +29,4 @@ data class InfoAboutMachines(
     val title: String = "",
     val count: Int = 0,
     val color: Color = Color.Red,
-){
-    companion object{
-        fun MachineState.getColor(): Color = when(this){
-            MachineState.WORKING -> Tiffany
-            MachineState.STOPPED -> Color.Gray
-            MachineState.REPAIR -> LightRed
-        }
-    }
-}
+)

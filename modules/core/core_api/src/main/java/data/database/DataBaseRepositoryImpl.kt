@@ -21,5 +21,5 @@ class DataBaseRepositoryImpl @Inject constructor(
     }
 
     override val getTestString: Flow<String>
-        get() = testDao.getTestString().map{it.value}
+        get() = testDao.getTestString().map { it.value }
 }

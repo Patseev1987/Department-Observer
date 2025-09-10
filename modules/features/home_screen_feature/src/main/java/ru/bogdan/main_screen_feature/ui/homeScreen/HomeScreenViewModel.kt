@@ -3,34 +3,33 @@ package ru.bogdan.main_screen_feature.ui.homeScreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import data.dataStore.DataStoreManager
 import data.network.NetworkRepository
 import data.resorseMenager.ResourceManager
 import domain.mechanic.Machine
 import domain.mechanic.MachineState
+import domain.user.Role
 import domain.user.User
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import ru.bogdan.main_screen_feature.di.UserId
+import ru.bogdan.core_ui.R
+import ru.bogdan.core_ui.ui.common.extansions.getColor
 import utils.SingleSharedFlow
 import javax.inject.Inject
-import ru.bogdan.core_ui.R
-import ru.bogdan.main_screen_feature.ui.homeScreen.InfoAboutMachines.Companion.getColor
 
 class HomeScreenViewModel @Inject constructor(
     private val manager: ResourceManager,
     private val dispatcher: CoroutineDispatcher,
     private val networkRepository: NetworkRepository,
-    @UserId private val userId: String
-) : ViewModel() {
+    private val dataStoreManager: DataStoreManager,
+
+    ) : ViewModel() {
 
     private var machines: Result<List<Machine>> = Result.success(emptyList())
     private var user: Result<User> = Result.success(User.NONE)
-
 
     private val _state = MutableStateFlow(HomeScreenState())
     val state = _state.asStateFlow()
@@ -39,44 +38,43 @@ class HomeScreenViewModel @Inject constructor(
     val uiAction = _uiAction.asSharedFlow()
 
     init {
-        prepareData(userId)
+        prepareData(dataStoreManager)
     }
 
     fun handleIntent(intent: HomeScreenIntent) {
         when (intent) {
-            is HomeScreenIntent.NavItemClicked -> {
-
-            }
-
             is HomeScreenIntent.ShowRepairList -> {
                 _state.update { it.copy(isShowRepairList = intent.isShow) }
+            }
+
+            is HomeScreenIntent.ShowInfoList -> {
+                _state.update { it.copy(isShowInfoList = intent.isShow) }
             }
         }
     }
 
-    private fun prepareData(userId: String) = viewModelScope.launch(dispatcher) {
+    private fun prepareData(dataStoreManager: DataStoreManager) = viewModelScope.launch(dispatcher) {
+        val userId = dataStoreManager.userId.first() ?: ""
         val tempUser = async { networkRepository.getUserById(userId) }
         val tempMachines = async { networkRepository.getMachines() }
-        val tempInfo = async { networkRepository.getImportantInfo(userId, 10) }
+        val tempInfo = async { networkRepository.getInfo() }
+
         user = tempUser.await()
         machines = tempMachines.await()
-
-
         user.onSuccess { user ->
             machines.onSuccess { machines ->
-                val repairList = tempInfo.await().getOrDefault(emptyList())
-                Log.i("HomeScreenViewModel", "prepareData: $repairList")
                 _state.update {
                     it.copy(
                         name = user.name,
                         surname = user.surname,
                         patronymic = user.patronymic,
                         photo = user.photoUrl,
+                        role = getStringFromRole(user.role),
                         isLoading = false,
                         infoAboutMachines = getInfoAboutMachines(machines),
                         machines = machines,
                         repairList = machines.filter { it.state == MachineState.REPAIR },
-                        info = repairList
+                        info = tempInfo.await().getOrThrow()
                     )
                 }
             }
@@ -89,18 +87,20 @@ class HomeScreenViewModel @Inject constructor(
             }
     }
 
-    private fun getInfoAboutMachines(machines: List<Machine>): List<InfoAboutMachines>{
+    private fun getInfoAboutMachines(machines: List<Machine>): List<InfoAboutMachines> {
         val tempInfo = mutableListOf<InfoAboutMachines>()
-        val angle = WHOLE_CIRCLE/machines.size
+        val angle = WHOLE_CIRCLE / machines.size
         MachineState.entries.forEach { state ->
             val count = machines.count { it.state == state }
-            tempInfo.add(InfoAboutMachines(
-                state = state,
-                percentage = count * angle,
-                title = getTitle(state),
-                color = state.getColor(),
-                count = count
-            ))
+            tempInfo.add(
+                InfoAboutMachines(
+                    state = state,
+                    percentage = count * angle,
+                    title = getTitle(state),
+                    color = state.getColor(),
+                    count = count
+                )
+            )
         }
         return tempInfo
     }
@@ -109,6 +109,11 @@ class HomeScreenViewModel @Inject constructor(
         MachineState.WORKING -> manager.getString(R.string.working)
         MachineState.STOPPED -> manager.getString(R.string.pause)
         MachineState.REPAIR -> manager.getString(R.string.repair)
+    }
+
+    private fun getStringFromRole(role: Role): String = when (role) {
+        Role.MANAGER -> manager.getString(R.string.role_manager)
+        Role.MECHANIC -> manager.getString(R.string.role_mechanic)
     }
 
     companion object {

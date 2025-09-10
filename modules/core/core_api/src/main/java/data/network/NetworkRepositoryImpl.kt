@@ -1,25 +1,25 @@
 package data.network
 
+import android.util.Log
 import data.network.mapers.MapperWeb
-import domain.info.Residue
+import domain.info.Info
 import domain.mechanic.Machine
+import domain.mechanic.MachineState
 import domain.user.User
+import java.io.File
 import java.security.MessageDigest
 import javax.inject.Inject
 
 class NetworkRepositoryImpl @Inject constructor(
     private val client: NetWorkClientApplication,
     private val mapperWeb: MapperWeb
-    ) : NetworkRepository {
-    override suspend fun getTestData(): String {
-        return client.getText()
-    }
+) : NetworkRepository {
 
     override suspend fun login(login: String, password: String): Result<User> {
         val md5 = MessageDigest.getInstance("MD5")
         val bytes = md5.digest(password.toByteArray())
         val passwordHash = bytes.toHexString()
-      return runCatching { client.login(login, passwordHash) }
+        return runCatching { client.login(login, passwordHash) }
     }
 
     override suspend fun logout() {
@@ -33,7 +33,7 @@ class NetworkRepositoryImpl @Inject constructor(
     override suspend fun getUserById(userId: String): Result<User> {
         return runCatching {
             mapperWeb.userFromWeb(
-            client.getUserById(userId)
+                client.getUserById(userId)
             )
         }
     }
@@ -44,10 +44,27 @@ class NetworkRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getImportantInfo(
-        userId: String,
-        lessThan: Int
-    ): Result<List<Residue>> {
-        return runCatching { client.getImportantInfo(userId, lessThan).map { mapperWeb.residueFromWeb(it) } }
+    override suspend fun getMachineById(id: String): Result<Machine> {
+        return runCatching {
+            mapperWeb.machineFromWeb(client.getMachineById(id))
+        }
+    }
+
+    override suspend fun changeState(machine: Machine) {
+            client.changeState(mapperWeb.machineToWeb(machine))
+    }
+
+    override suspend fun downloadDocById(docId: String): Result<ByteArray> {
+        return runCatching {
+            client.getDocById(docId)
+        }
+    }
+
+    override suspend fun getInfo(): Result<List<Info>> {
+        return runCatching {
+            client.getInfo().map {
+                mapperWeb.infoFromWeb(it)
+            }
+        }
     }
 }

@@ -1,12 +1,10 @@
 package data.network
 
-import domain.info.Residue
+import domain.info.Info
 import domain.mechanic.Machine
 import domain.user.User
 
 interface NetworkRepository {
-
-    suspend fun getTestData(): String
 
     suspend fun login(login: String, password: String): Result<User>
 
@@ -18,8 +16,12 @@ interface NetworkRepository {
 
     suspend fun getMachines(): Result<List<Machine>>
 
-    //suspend fun getRecords(): Result<Records>
+    suspend fun getMachineById(id: String): Result<Machine>
 
-    suspend fun getImportantInfo(userId: String, lessThan: Int): Result<List<Residue>>
+    suspend fun changeState(machine: Machine)
+
+    suspend fun downloadDocById(docId: String): Result<ByteArray>
+
+    suspend fun getInfo(): Result<List<Info>>
 }
 

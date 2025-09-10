@@ -74,14 +74,13 @@ fun UserCard(
                 .size(imageSize - strokeWidth)
                 .offset(y = strokeWidth)
                 .align(Alignment.CenterHorizontally)
-                .clip(CircleShape)
-                .background(Color.Red),
+                .clip(CircleShape),
             contentAlignment = Alignment.Center,
         ) {
             photoContent?.invoke(this)
         }
 
-        Spacer(modifier = Modifier.height(spacing.large))
+        Spacer(modifier = Modifier.height(spacing.medium + spacing.small))
 
         Box(
             modifier = Modifier
@@ -96,21 +95,21 @@ fun UserCard(
                 .fillMaxWidth()
                 .weight(1f)
                 .padding(
-                    start = strokeWidth + spacing.medium,
-                    end = strokeWidth + spacing.medium,
-                    bottom = strokeWidth + spacing.medium,
-                    top = spacing.medium,
+                    start = strokeWidth + spacing.small,
+                    end = strokeWidth + spacing.small,
+                    bottom = strokeWidth + spacing.small,
+                    top = spacing.small,
                 )
                 .background(
                     color = Color.Transparent,
                     shape = RoundedCornerShape(
-                        topStart = spacing.medium,
-                        topEnd = spacing.medium,
+                        topStart = spacing.small,
+                        topEnd = spacing.small,
                         bottomEnd = 25.dp,
                         bottomStart = 25.dp
                     )
                 )
-                .padding(spacing.medium)
+                .padding(spacing.small)
 
         ) {
             dataContent.invoke(this)
@@ -131,7 +130,9 @@ private fun UserCardPreview(
         strokeWidth = 30.dp,
         colorNearPhoto = Emerald.copy(0.8f),
         dataContent = {
-            Box(modifier = Modifier.size(40.dp).background(Color.White))
+            Box(modifier = Modifier
+                .size(40.dp)
+                .background(Color.White))
         },
         nameContent = {
             Column(modifier = Modifier.fillMaxWidth()) {

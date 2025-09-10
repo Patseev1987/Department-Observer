@@ -15,11 +15,11 @@ import data.database.model.TestEntity
 //@TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
 
-//    abstract val daoEmployeeDBWithToolDB: DaoEmployeeDBWithToolDB
+    //    abstract val daoEmployeeDBWithToolDB: DaoEmployeeDBWithToolDB
 //    abstract val daoEmployeeDB: DaoEmployeeDB
 //    abstract val daoToolDB: DaoToolDB
 //    abstract val daoEmployeesDBToolDBCross: DaoEmployeeDBToolDBCross
-        abstract fun testDao(): TestDao
+    abstract fun testDao(): TestDao
 
     companion object {
         @Volatile

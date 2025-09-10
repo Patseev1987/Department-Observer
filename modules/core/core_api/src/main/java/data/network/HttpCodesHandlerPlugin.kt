@@ -1,12 +1,11 @@
 package data.network
 
-import io.ktor.client.call.body
-import io.ktor.client.plugins.api.createClientPlugin
+import io.ktor.client.plugins.api.*
 
-val HttpCodesHandlerPlugin = createClientPlugin("HttpCodesHandlerPlugin"){
+val HttpCodesHandlerPlugin = createClientPlugin("HttpCodesHandlerPlugin") {
     onResponse {
         when (it.status.value) {
-            in 200..299 -> {
+            in 200..399 -> {
                 return@onResponse
             }
 

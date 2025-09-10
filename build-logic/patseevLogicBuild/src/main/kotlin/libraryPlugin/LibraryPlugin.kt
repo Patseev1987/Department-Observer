@@ -2,7 +2,6 @@ package libraryPlugin
 
 import androidConfig
 import com.android.build.api.dsl.ApplicationDefaultConfig
-import com.android.build.api.dsl.DefaultConfig
 import com.android.build.api.dsl.LibraryDefaultConfig
 import libs
 import org.gradle.api.Plugin
@@ -20,6 +19,11 @@ class LibraryPlugin : Plugin<Project> {
                 apply("patseev.android.config")
             }
             androidConfig {
+                defaultConfig {
+                    this as LibraryDefaultConfig
+                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                    consumerProguardFiles("consumer-rules.pro")
+                }
                 buildFeatures {
                     buildConfig = false
                 }

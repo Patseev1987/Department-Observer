@@ -1,6 +1,5 @@
 package ru.bogdan.login_feature.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.dataStore.DataStoreManager
@@ -11,9 +10,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.bogdan.core_ui.R
 import utils.SingleSharedFlow
 import javax.inject.Inject
-import ru.bogdan.core_ui.R
 
 class LoginViewModel @Inject constructor(
     private val networkRepository: NetworkRepository,
@@ -40,25 +39,25 @@ class LoginViewModel @Inject constructor(
             LoginIntent.LogInPressed -> {
                 viewModelScope.launch {
                     _state.update { it.copy(isLoading = true) }
-
+                    delay(1000)
                     withContext(dispatcher) {
                         networkRepository.login(
                             login = _state.value.login,
                             password = _state.value.password
                         )
-                            .onSuccess {
-                                dataStoreManager.saveAccessTokens(it.accessToken, it.refreshToken)
+                            .onSuccess { user ->
+                                dataStoreManager.saveAccessTokens(user.accessToken, user.refreshToken, user.id)
                                 _state.update { it.copy(isLoading = false) }
-                                Log.i("Login", "Login successful ${it.name}")
-                                _uiAction.emit(LoginUiAction.ShowToast(
-                                    resourceManager.getString(R.string.succes, it.name)
-                                ))
-                                delay(1000)
-                                _uiAction.emit(LoginUiAction.GoToMainScreen(it.id))
+                                _uiAction.emit(
+                                    LoginUiAction.ShowToast(
+                                        resourceManager.getString(R.string.succes, user.name)
+                                    )
+                                )
+                                delay(400)
+                                _uiAction.emit(LoginUiAction.GoToMainScreen)
                             }
-                            .onFailure {error ->
+                            .onFailure { error ->
                                 _uiAction.emit(LoginUiAction.ShowToast(error.message ?: ""))
-                                Log.i("Login", "Login  ${error.message}")
                                 _state.update { it.copy(isLoading = false) }
                             }
                     }

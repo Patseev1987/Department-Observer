@@ -1,3 +1,5 @@
+
+
 plugins {
     alias(libs.plugins.ktor)
     alias(libs.plugins.patseev.plugin.library)
@@ -6,17 +8,37 @@ plugins {
 android {
     namespace = "ru.bogdan.core_api"
 
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+                  buildConfigField(
+                "String",
+                "BASE_URL",
+                project.properties["BASE_URL_TEST"].toString()
+            )
+        }
+        create("prod") {
+            dimension = "environment"
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                project.properties["BASE_URL_PROD"].toString()
+            )
+        }
+    }
+
 }
 
 dependencies {

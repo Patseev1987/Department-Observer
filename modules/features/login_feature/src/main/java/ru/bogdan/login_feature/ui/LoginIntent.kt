@@ -5,5 +5,5 @@ sealed interface LoginIntent {
 
     data class ChangePassword(val password: String) : LoginIntent
 
-    data object LogInPressed: LoginIntent
+    data object LogInPressed : LoginIntent
 }

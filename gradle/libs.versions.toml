@@ -1,4 +1,5 @@
 [versions]
+accompanistSystemuicontroller = "0.36.0"
 agp = "8.11.1"
 kotlin = "2.2.10"
 coreKtx = "1.17.0"
@@ -22,16 +23,17 @@ kotlinxCoroutinesTest = "1.10.2"
 datastore = "1.1.7"
 runtimeAndroid = "1.9.0"
 material = "1.13.0"
-composePlugin="1.8.2"
+composePlugin = "1.8.2"
 
-java="17"
-compileSdk="36"
-targetSdk="36"
-minSdk="28"
+java = "17"
+compileSdk = "36"
+targetSdk = "36"
+minSdk = "28"
 versionCode = "1"
 versionName = "1.0"
 
 [libraries]
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -49,11 +51,11 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktorVersion" }
-ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref  = "ktorVersion" }
-ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref  = "ktorVersion" }
-ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref  = "ktorVersion" }
-ktor-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref  = "ktorVersion" }
-ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref  = "ktorVersion" }
+ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktorVersion" }
+ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktorVersion" }
+ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktorVersion" }
+ktor-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
+ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktorVersion" }
 ktor-client-test = { module = "io.ktor:ktor-client-mock", version.ref = "ktorVersion" }
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
@@ -87,6 +89,6 @@ serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref 
 ktor = { id = "io.ktor.plugin", version.ref = "ktorVersion" }
 
 
-patseev-plugin-app = { id = "patseev-appPlugin"}
-patseev-plugin-library = { id = "patseev-libraryPlugin"}
+patseev-plugin-app = { id = "patseev-appPlugin" }
+patseev-plugin-library = { id = "patseev-libraryPlugin" }
 

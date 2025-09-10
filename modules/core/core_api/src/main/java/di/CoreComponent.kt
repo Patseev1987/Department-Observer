@@ -8,7 +8,7 @@ import dagger.Component
 @Component(
     modules = [NetworkModule::class, DataStoreModule::class, DataBaseModule::class, ResourceManagerModule::class],
 )
-interface CoreComponent: CoreProvider {
+interface CoreComponent : CoreProvider {
 
     @Component.Factory
     interface Factory {

@@ -1,10 +1,44 @@
 <resources>
+    <!--    Login-->
     <string name="log_in">Log in</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="succes">Hello %s</string>
+    <!--    Home-->
     <string name="repair">Repair</string>
     <string name="working">Working</string>
     <string name="pause">Pause</string>
     <string name="info">Information about equipment</string>
+    <string name="machines_item">Machines</string>
+    <string name="home_item">Home</string>
+    <string name="role_mechanic">Mechanic</string>
+    <string name="role_manager">Manager</string>
+    <string name="list_of_repair_machines">List of repair machines</string>
+    <string name="info_news">Information</string>
+    <string name="news">Last news</string>
+    <string name="turning">Turning machine</string>
+    <string name="turning_cnc">Turning CNC machine</string>
+    <string name="milling">Milling CNC machine</string>
+    <string name="milling_horizontal">Milling horizontal machine</string>
+    <string name="milling_universal">Milling universal machine</string>
+    <string name="milling_cnc">Milling CNC machine</string>
+    <!--    Machine details-->
+    <string name="oils_title">Oils</string>
+    <string name="parts_title">Parts</string>
+    <string name="year_of_manufacture">Year of maufacture : %s</string>
+    <string name="doc_title">Documentation</string>
+    <string name="file_downloaded">File %s was downloaded</string>
+    <string name="file_not_downloaded">File %s was not downloaded</string>
+    <string name="do_you_want">Do you want to download file \n%s?</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
+<!--    Machine List-->
+    <string name="moldel_filter">Machine model</string>
+    <string name="type_filter">Machine type</string>
+    <string name="state_filter">Machine state</string>
+    <string name="years_filter">Years of manufacture</string>
+    <string name="years_range">from %1$d to %2$d</string>
+    <string name="apply_filter">Apply</string>
+    <string name="drop_filter">Drop</string>
+    <string name="state">State</string>
 </resources>

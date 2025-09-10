@@ -1,12 +1,12 @@
 package data.network.mapers
 
-import data.network.models.info.ResidueWeb
+import data.network.models.info.InfoWeb
 import data.network.models.mechanic.MachineDocumentWeb
 import data.network.models.mechanic.MachineWeb
 import data.network.models.mechanic.OilWeb
 import data.network.models.mechanic.PartOfMachineWeb
 import data.network.models.user.UserWeb
-import domain.info.Residue
+import domain.info.Info
 import domain.mechanic.Machine
 import domain.mechanic.MachineDocument
 import domain.mechanic.Oil
@@ -18,14 +18,14 @@ class MapperWeb {
         id = doc.id,
         name = doc.name,
         description = doc.description,
-        machineId = doc.machineId
+        machineModel = doc.machineModel
     )
 
     fun machineDocFromWeb(doc: MachineDocumentWeb) = MachineDocument(
         id = doc.id,
         name = doc.name,
         description = doc.description,
-        machineId = doc.machineId
+        machineModel = doc.machineModel
     )
 
     fun partOfMachineFromWeb(part: PartOfMachineWeb) = PartOfMachine(
@@ -59,10 +59,11 @@ class MapperWeb {
         name = machine.name,
         imageUrl = machine.imageUrl,
         description = machine.description,
+        model = machine.model,
         state = machine.state,
         type = machine.type,
         yearOfManufacture = machine.yearOfManufacture,
-        parts = machine.parts.map { partOfMachineToWeb(it.key) to it.value}.toMap(),
+        parts = machine.parts.map { partOfMachineToWeb(it.key) to it.value }.toMap(),
         docs = machine.docs.map { machineDocToWeb(it) },
         oils = machine.oils.map { oilToWeb(it.key) to it.value }.toMap(),
     )
@@ -77,7 +78,8 @@ class MapperWeb {
         yearOfManufacture = machine.yearOfManufacture,
         parts = machine.parts.map { partOfMachineFromWeb(it.key) to it.value }.toMap(),
         docs = machine.docs.map { machineDocFromWeb(it) },
-        oils = machine.oils.map{ oilsFromWeb(it.key) to it.value }.toMap(),
+        oils = machine.oils.map { oilsFromWeb(it.key) to it.value }.toMap(),
+        model = machine.model,
     )
 
     fun userToWeb(user: User) = UserWeb(
@@ -102,13 +104,9 @@ class MapperWeb {
         refreshToken = user.refreshToken
     )
 
-    fun residueFromWeb(residue: ResidueWeb) = Residue(
-        residueId = residue.residueId,
-        count = residue.count,
-    )
-
-    fun residueToWeb(residue: Residue) = ResidueWeb(
-        residueId = residue.residueId,
-        count = residue.count,
+    fun infoFromWeb(info: InfoWeb) = Info(
+        id = info.id,
+        name = info.name,
+        info = info.info,
     )
 }

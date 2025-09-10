@@ -1,9 +1,10 @@
 package data.network
 
 import data.dataStore.DataStoreManager
-import data.network.models.info.ResidueWeb
+import data.network.models.info.InfoWeb
 import data.network.models.mechanic.MachineWeb
 import data.network.models.user.UserWeb
+import domain.mechanic.Machine
 import domain.user.User
 import domain.user.UserRequest
 import io.ktor.client.*
@@ -15,19 +16,22 @@ import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
+import io.ktor.client.statement.bodyAsBytes
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
+import ru.bogdan.core_api.BuildConfig
+import java.io.File
 import javax.inject.Inject
 
-private const val BASE_URL = "http://192.168.0.23:8080"
+private const val BASE_URL = BuildConfig.BASE_URL
 
 class NetWorkClientApplication @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) {
     private val httpClient = HttpClient(CIO) {
+
         install(HttpTimeout) {
             socketTimeoutMillis = 10000
             requestTimeoutMillis = 15000
@@ -65,8 +69,6 @@ class NetWorkClientApplication @Inject constructor(
         }
     }
 
-    suspend fun getText() = httpClient.get("$BASE_URL/").bodyAsText()
-
     suspend fun login(login: String, password: String): User {
 
         val response = httpClient.post("$BASE_URL/login") {
@@ -82,15 +84,20 @@ class NetWorkClientApplication @Inject constructor(
         //TODO
     }
 
+
+
     suspend fun getUserById(id: String) = httpClient.get("$BASE_URL/users/$id").body<UserWeb>()
 
     suspend fun getMachines() = httpClient.get("$BASE_URL/machines").body<List<MachineWeb>>()
 
-    suspend fun getImportantInfo(
-        userId: String,
-        lessThan: Int
-    ) = httpClient.get("$BASE_URL/info") {
-        parameter("user_id", userId)
-        parameter("less_than", lessThan)
-    }.body<List<ResidueWeb>>()
+    suspend fun getMachineById(id: String) = httpClient.get("$BASE_URL/machines/$id").body<MachineWeb>()
+
+    suspend fun changeState(newMachine: MachineWeb) = httpClient.post("$BASE_URL/machines/state") {
+        contentType(ContentType.Application.Json)
+        setBody(newMachine)
+    }
+
+    suspend fun getDocById(docId: String) = httpClient.get("$BASE_URL/machines/files/$docId").bodyAsBytes()
+
+    suspend fun getInfo() = httpClient.get("$BASE_URL/info").body<List<InfoWeb>>()
 }

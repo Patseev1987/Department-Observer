@@ -6,11 +6,6 @@ plugins {
 android {
     namespace = "ru.bogdan.main_screen_feature"
 
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -19,6 +14,10 @@ android {
     }
     kotlinOptions {
         freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
+    }
+    defaultConfig{
+        missingDimensionStrategy("environment","prod")
+        missingDimensionStrategy("environment","dev")
     }
 }
 

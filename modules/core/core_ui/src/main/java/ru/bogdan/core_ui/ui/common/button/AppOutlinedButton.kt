@@ -16,9 +16,9 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AppOutlinedButton(
     onClick: () -> Unit,
+    color: Color,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    color: Color,
     shape: Shape = RoundedCornerShape(16.dp),
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     boarder: BorderStroke = BorderStroke(
@@ -44,7 +44,5 @@ fun PreviewAppOutlinedButton() {
     AppOutlinedButton(
         onClick = {},
         color = Color.Red,
-    ) {
-
-    }
+    ){}
 }

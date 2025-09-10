@@ -4,20 +4,19 @@ import dagger.BindsInstance
 import dagger.Component
 import di.CoreProvider
 import di.ViewModelFactory
-import javax.inject.Named
 import javax.inject.Singleton
 
-    @Singleton
-    @Component(
-        modules = [HomeScreenViewModelModule::class],
-        dependencies = [CoreProvider::class]
-    )
-    interface HomeScreenComponent : CoreProvider {
+@Singleton
+@Component(
+    modules = [HomeScreenViewModelModule::class],
+    dependencies = [CoreProvider::class]
+)
+interface HomeScreenComponent : CoreProvider {
 
-        fun getViewModelFactory(): ViewModelFactory
+    fun getViewModelFactory(): ViewModelFactory
 
-        @Component.Factory
-        interface Factory {
-            fun create(coreProvider: CoreProvider, @BindsInstance @UserId userId: String): HomeScreenComponent
-        }
+    @Component.Factory
+    interface Factory {
+        fun create(coreProvider: CoreProvider): HomeScreenComponent
     }
+}

@@ -8,8 +8,8 @@ import ru.bogdan.departmentobserver.di.DaggerAppComponent
 import ru.bogdan.login_feature.di.DaggerLoginComponent
 
 class ObserverApp : Application() {
-    private val coreProvider:CoreProvider by lazy {
-       CoreProviderFactory.create(this)
+    private val coreProvider: CoreProvider by lazy {
+        CoreProviderFactory.create(this)
     }
 
     val appComponent: AppComponent by lazy {
@@ -19,8 +19,6 @@ class ObserverApp : Application() {
     val loginComponent by lazy {
         DaggerLoginComponent.factory().create(coreProvider)
     }
-
-
 
 
 }
