@@ -1,5 +1,7 @@
 package data.network
 
+import data.network.mapers.MapperWeb
+import domain.info.Residue
 import domain.mechanic.Machine
 import domain.user.User
 import java.security.MessageDigest
@@ -7,6 +9,7 @@ import javax.inject.Inject
 
 class NetworkRepositoryImpl @Inject constructor(
     private val client: NetWorkClientApplication,
+    private val mapperWeb: MapperWeb
     ) : NetworkRepository {
     override suspend fun getTestData(): String {
         return client.getText()
@@ -28,10 +31,23 @@ class NetworkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUserById(userId: String): Result<User> {
-        return runCatching { client.getUserById(userId) }
+        return runCatching {
+            mapperWeb.userFromWeb(
+            client.getUserById(userId)
+            )
+        }
     }
 
     override suspend fun getMachines(): Result<List<Machine>> {
-        return runCatching { client.getMachines() }
+        return runCatching {
+            client.getMachines().map { mapperWeb.machineFromWeb(it) }
+        }
+    }
+
+    override suspend fun getImportantInfo(
+        userId: String,
+        lessThan: Int
+    ): Result<List<Residue>> {
+        return runCatching { client.getImportantInfo(userId, lessThan).map { mapperWeb.residueFromWeb(it) } }
     }
 }

@@ -1,7 +1,9 @@
 package data.network
 
 import data.dataStore.DataStoreManager
-import domain.mechanic.Machine
+import data.network.models.info.ResidueWeb
+import data.network.models.mechanic.MachineWeb
+import data.network.models.user.UserWeb
 import domain.user.User
 import domain.user.UserRequest
 import io.ktor.client.*
@@ -44,6 +46,7 @@ class NetWorkClientApplication @Inject constructor(
                     ignoreUnknownKeys = true
                     prettyPrint = true
                     isLenient = true
+                    allowStructuredMapKeys = true
                 }
             )
         }
@@ -79,8 +82,15 @@ class NetWorkClientApplication @Inject constructor(
         //TODO
     }
 
-    suspend fun getUserById(id: String) = httpClient.get("$BASE_URL/users/$id").body<User>()
+    suspend fun getUserById(id: String) = httpClient.get("$BASE_URL/users/$id").body<UserWeb>()
 
-    suspend fun getMachines() = httpClient.get("$BASE_URL/machines").body<List<Machine>>()
+    suspend fun getMachines() = httpClient.get("$BASE_URL/machines").body<List<MachineWeb>>()
 
+    suspend fun getImportantInfo(
+        userId: String,
+        lessThan: Int
+    ) = httpClient.get("$BASE_URL/info") {
+        parameter("user_id", userId)
+        parameter("less_than", lessThan)
+    }.body<List<ResidueWeb>>()
 }

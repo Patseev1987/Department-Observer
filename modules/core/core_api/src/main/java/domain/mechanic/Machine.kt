@@ -1,8 +1,8 @@
 package domain.mechanic
 
-import domain.department.MyPoint
+import androidx.compose.runtime.Immutable
 
-
+@Immutable
 data class Machine(
     val id: String,
     val name: String,
@@ -11,12 +11,9 @@ data class Machine(
     val state: MachineState,
     val type: MachineType,
     val yearOfManufacture: Int,
-    val parts: List<PartOfMachine>,
+    val parts: Map<PartOfMachine, Int>,
     val docs: List<MachineDocument>,
-    val oils: Map<String, Int>,
-    val offset: MyPoint,
-    val rotateAngle: Float = 0.0f,
-    val pointsForPath: List<MyPoint>,
+    val oils: Map<Oil, Int>,
 ) {
     companion object {
         val NONE = Machine(
@@ -28,9 +25,7 @@ data class Machine(
             type = MachineType.TURNING,
             docs = emptyList(),
             oils = mapOf(),
-            parts = listOf(),
-            offset = MyPoint(0.0f, 0.0f),
-            pointsForPath = listOf(),
+            parts = mapOf(),
             yearOfManufacture = 1947
         )
     }

@@ -1,6 +1,5 @@
 package data.network.models.mechanic
 
-import domain.department.MyPoint
 import domain.mechanic.MachineState
 import domain.mechanic.MachineType
 import kotlinx.serialization.SerialName
@@ -17,14 +16,9 @@ data class MachineWeb(
     val type: MachineType,
     @SerialName("year_of_manufactured")
     val yearOfManufacture: Int,
-    val parts: List<PartOfMachineWeb>,
+    val parts: Map<PartOfMachineWeb,Int>,
     val docs: List<MachineDocumentWeb>,
-    val oils: Map<String,Int>,
-    val offset: MyPoint,
-    @SerialName("rotate_angle")
-    val rotateAngle: Float = 0.0f,
-    @SerialName("points_for_path")
-    val pointsForPath: List<MyPoint>,
+    val oils: Map<OilWeb,Int>,
 ) {
     companion object Companion {
         val NONE =   MachineWeb(
@@ -36,9 +30,7 @@ data class MachineWeb(
         type = MachineType.TURNING,
         docs = emptyList(),
         oils = mapOf(),
-        parts = listOf(),
-        offset = MyPoint(0.0f, 0.0f),
-        pointsForPath = listOf(),
+        parts = mapOf(),
         yearOfManufacture = 1947
         )
     }

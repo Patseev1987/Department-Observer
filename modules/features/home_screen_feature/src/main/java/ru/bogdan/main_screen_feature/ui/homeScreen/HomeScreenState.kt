@@ -1,6 +1,7 @@
 package ru.bogdan.main_screen_feature.ui.homeScreen
 
 import androidx.compose.ui.graphics.Color
+import domain.info.Residue
 import domain.mechanic.Machine
 import domain.mechanic.MachineState
 import domain.user.Role
@@ -16,7 +17,10 @@ data class HomeScreenState(
     val isLoading: Boolean = true,
     val error: Throwable? = null,
     val infoAboutMachines: List<InfoAboutMachines> = listOf(),
-    val machines: List<Machine> = emptyList()
+    val machines: List<Machine> = emptyList(),
+    val isShowRepairList: Boolean = false,
+    val repairList: List<Machine> = emptyList(),
+    val info: List<Residue> = emptyList()
 )
 
 data class InfoAboutMachines(

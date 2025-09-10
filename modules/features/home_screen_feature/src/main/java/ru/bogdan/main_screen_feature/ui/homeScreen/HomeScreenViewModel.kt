@@ -1,5 +1,6 @@
 package ru.bogdan.main_screen_feature.ui.homeScreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.network.NetworkRepository
@@ -46,17 +47,25 @@ class HomeScreenViewModel @Inject constructor(
             is HomeScreenIntent.NavItemClicked -> {
 
             }
+
+            is HomeScreenIntent.ShowRepairList -> {
+                _state.update { it.copy(isShowRepairList = intent.isShow) }
+            }
         }
     }
 
     private fun prepareData(userId: String) = viewModelScope.launch(dispatcher) {
         val tempUser = async { networkRepository.getUserById(userId) }
         val tempMachines = async { networkRepository.getMachines() }
+        val tempInfo = async { networkRepository.getImportantInfo(userId, 10) }
         user = tempUser.await()
         machines = tempMachines.await()
 
+
         user.onSuccess { user ->
             machines.onSuccess { machines ->
+                val repairList = tempInfo.await().getOrDefault(emptyList())
+                Log.i("HomeScreenViewModel", "prepareData: $repairList")
                 _state.update {
                     it.copy(
                         name = user.name,
@@ -66,6 +75,8 @@ class HomeScreenViewModel @Inject constructor(
                         isLoading = false,
                         infoAboutMachines = getInfoAboutMachines(machines),
                         machines = machines,
+                        repairList = machines.filter { it.state == MachineState.REPAIR },
+                        info = repairList
                     )
                 }
             }

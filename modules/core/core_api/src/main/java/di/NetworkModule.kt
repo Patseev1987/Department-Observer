@@ -7,6 +7,7 @@ import data.dataStore.DataStoreManager
 import data.network.NetWorkClientApplication
 import data.network.NetworkRepository
 import data.network.NetworkRepositoryImpl
+import data.network.mapers.MapperWeb
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -25,5 +26,9 @@ interface NetworkModule {
         @AppScope
         fun provideNetWorkClientApplication(dataStoreManager: DataStoreManager): NetWorkClientApplication =
             NetWorkClientApplication(dataStoreManager)
+
+        @Provides
+        @AppScope
+        fun provideMapperWeb() = MapperWeb()
     }
 }

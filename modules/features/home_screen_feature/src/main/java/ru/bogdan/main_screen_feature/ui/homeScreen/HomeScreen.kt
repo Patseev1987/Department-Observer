@@ -1,11 +1,19 @@
 package ru.bogdan.main_screen_feature.ui.homeScreen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -66,10 +74,25 @@ fun HomeScreen(
                 NameContent(state = state)
             },
             dataContent = {
-                PaiChart(
-                    modifier = Modifier.fillMaxWidth(),
-                    state = state,
-                )
+                LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                    item {
+                        PaiChart(
+                            modifier = Modifier.fillMaxWidth(),
+                            state = state,
+                        ) {
+                            viewModel.handleIntent(HomeScreenIntent.ShowRepairList(it))
+                        }
+                    }
+                    state.value.info.forEach { info ->
+                        item{
+                                Text(
+                                    text = "$info",
+                                    fontSize = 22.sp,
+                                )
+                        }
+                    }
+
+                }
             }
         )
     }
@@ -130,7 +153,8 @@ fun NameContent(
 @Composable
 fun PaiChart(
     state: State<HomeScreenState>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (Boolean) -> Unit,
 ) {
     val spacing = LocalSpacing.current
     Column(
@@ -149,7 +173,16 @@ fun PaiChart(
             fontWeight = Bold,
             fontFamily = FontFamily.Cursive,
         )
-        Spacer(Modifier.height(spacing.medium))
+       // Spacer(Modifier.height(spacing.extraSmall))
+
+        IconButton(
+            onClick = { onClick(!state.value.isShowRepairList) }
+        ) {
+            Icon(
+                if(state.value.isShowRepairList) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
+                contentDescription = null,
+            )
+        }
         Row(
             modifier = modifier.padding(spacing.small),
             verticalAlignment = Alignment.CenterVertically,
@@ -184,6 +217,23 @@ fun PaiChart(
                     )
                 }
 
+            }
+        }
+        AnimatedVisibility(
+            modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp, max = 200.dp),
+            visible = state.value.isShowRepairList
+        ) {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                items(
+                    items = state.value.repairList,
+                    key = {it.id}
+                ){
+                    Text(text = it.name)
+                }
             }
         }
     }

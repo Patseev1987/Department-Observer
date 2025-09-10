@@ -4,4 +4,5 @@ import ru.bogdan.main_screen_feature.ui.ObserverNavigationItem
 
 sealed interface HomeScreenIntent {
     data class NavItemClicked(val observerNavigationItem: ObserverNavigationItem) : HomeScreenIntent
+    data class ShowRepairList(val isShow: Boolean) : HomeScreenIntent
 }
