@@ -5,8 +5,8 @@ import domain.info.Residue
 import domain.mechanic.Machine
 import domain.mechanic.MachineState
 import domain.user.Role
-import ui.theme.LightRed
-import ui.theme.Tiffany
+import ru.bogdan.core_ui.ui.theme.LightRed
+import ru.bogdan.core_ui.ui.theme.Tiffany
 
 data class HomeScreenState(
     val photo: String? = null,

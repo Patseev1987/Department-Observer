@@ -22,17 +22,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import ru.bogdan.main_screen_feature.R
-import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenIntent
+import ru.bogdan.core_ui.R
 import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenState
 import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenUiAction
 import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreenViewModel
 import ru.bogdan.main_screen_feature.ui.homeScreen.userCard.UserCard
 import ru.bogdan.main_screen_feature.utils.getHomeScreenComponent
-import ui.theme.Emerald
-import ui.theme.LocalSpacing
-import ui.theme.MainGradient
-import ui.theme.Typography
+import ru.bogdan.core_ui.ui.theme.Emerald
+import ru.bogdan.core_ui.ui.theme.LocalSpacing
+import ru.bogdan.core_ui.ui.theme.MainGradient
+import ru.bogdan.core_ui.ui.theme.Typography
 
 @Composable
 fun MainScreen(

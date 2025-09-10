@@ -30,5 +30,6 @@ interface NetworkModule {
         @Provides
         @AppScope
         fun provideMapperWeb() = MapperWeb()
+
     }
 }

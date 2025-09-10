@@ -1,4 +1,4 @@
-package ui.theme
+package ru.bogdan.core_ui.ui.theme
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.Dp

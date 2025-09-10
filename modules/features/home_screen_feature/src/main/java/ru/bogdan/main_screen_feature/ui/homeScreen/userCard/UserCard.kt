@@ -22,9 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import ui.theme.Emerald
-import ui.theme.LocalSpacing
-import ui.theme.Typography
+import ru.bogdan.core_ui.ui.theme.Emerald
+import ru.bogdan.core_ui.ui.theme.LocalSpacing
+import ru.bogdan.core_ui.ui.theme.Typography
 
 
 @Composable

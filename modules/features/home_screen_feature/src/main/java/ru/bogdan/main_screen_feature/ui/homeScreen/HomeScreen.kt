@@ -33,11 +33,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import domain.mechanic.MachineState
-import ru.bogdan.main_screen_feature.R
+import ru.bogdan.core_ui.R
 import ru.bogdan.main_screen_feature.ui.homeScreen.userCard.UserCard
 import ru.bogdan.main_screen_feature.utils.getHomeScreenComponent
-import ui.theme.*
+import ru.bogdan.core_ui.ui.theme.Beige
+import ru.bogdan.core_ui.ui.theme.Emerald
+import ru.bogdan.core_ui.ui.theme.LocalSpacing
+import ru.bogdan.core_ui.ui.theme.MainGradient
+import ru.bogdan.core_ui.ui.theme.Typography
 
 @Composable
 fun HomeScreen(

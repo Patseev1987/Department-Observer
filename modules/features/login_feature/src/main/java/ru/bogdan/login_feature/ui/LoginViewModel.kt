@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import utils.SingleSharedFlow
 import javax.inject.Inject
-import ru.bogdan.login_feature.R
+import ru.bogdan.core_ui.R
 
 class LoginViewModel @Inject constructor(
     private val networkRepository: NetworkRepository,

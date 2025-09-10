@@ -3,4 +3,8 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="succes">Hello %s</string>
+    <string name="repair">Repair</string>
+    <string name="working">Working</string>
+    <string name="pause">Pause</string>
+    <string name="info">Information about equipment</string>
 </resources>

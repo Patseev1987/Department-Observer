@@ -2,10 +2,8 @@ plugins {
     alias(libs.plugins.patseev.plugin.library)
 }
 
-
 android {
-    namespace = "ru.bogdan.core_ui"
-    compileSdk = 36
+    namespace = "ru.bogdan.machine_list"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -18,5 +16,14 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+}
+
+dependencies {
+    implementation(project(path = ":modules:core:core_api"))
+    implementation(project(path = ":modules:core:core_ui"))
+    //Coil
+    implementation(libs.coil.network)
+    implementation(libs.coil)
 
 }

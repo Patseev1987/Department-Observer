@@ -22,7 +22,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,12 +37,12 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import navigation.NavigationEvent
-import ru.bogdan.login_feature.R
+import ru.bogdan.core_ui.ui.common.box.BoxWithBackgroundPhoto
+import ru.bogdan.core_ui.ui.common.button.AppOutlinedButton
+import ru.bogdan.core_ui.ui.theme.Emerald
+import ru.bogdan.core_ui.ui.theme.LocalSpacing
 import ru.bogdan.login_feature.util.getLoginComponent
-import ui.common.button.AppOutlinedButton
-import ui.theme.Emerald
-import ui.theme.LocalSpacing
-import ui.theme.MainGradient
+import ru.bogdan.core_ui.R
 
 
 @Composable
@@ -73,23 +72,9 @@ fun LoginScreen(
         }
     }
 
-    Box(
-        modifier = modifier
+    BoxWithBackgroundPhoto(
+        drawableId = R.drawable.werehouse,
     ) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(R.drawable.werehouse),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    brush = MainGradient
-                )
-        )
-
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -162,7 +147,6 @@ fun LoginScreen(
                     .size(50.dp)
             )
         }
-
     }
 }
 

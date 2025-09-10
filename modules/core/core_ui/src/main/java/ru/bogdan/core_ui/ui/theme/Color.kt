@@ -1,4 +1,4 @@
-package ui.theme
+package ru.bogdan.core_ui.ui.theme
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Brush

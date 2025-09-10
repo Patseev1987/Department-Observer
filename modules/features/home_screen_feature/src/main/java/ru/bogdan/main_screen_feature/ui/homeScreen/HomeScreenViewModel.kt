@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import ru.bogdan.main_screen_feature.di.UserId
 import utils.SingleSharedFlow
 import javax.inject.Inject
-import ru.bogdan.main_screen_feature.R
+import ru.bogdan.core_ui.R
 import ru.bogdan.main_screen_feature.ui.homeScreen.InfoAboutMachines.Companion.getColor
 
 class HomeScreenViewModel @Inject constructor(

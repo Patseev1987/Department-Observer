@@ -1,4 +1,4 @@
-package ui.common.button
+package ru.bogdan.core_ui.ui.common.button
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.RowScope
