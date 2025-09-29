@@ -381,7 +381,6 @@ fun InfoList(
                     items = state.value.info,
                     key = { _, info -> info.id }
                 ) { index, info ->
-                    Log.i("HomeScreenViewModel", "info: $info")
                     Row(
                         Modifier
                             .fillMaxWidth()

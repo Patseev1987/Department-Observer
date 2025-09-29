@@ -4,7 +4,6 @@ import data.dataStore.DataStoreManager
 import data.network.models.info.InfoWeb
 import data.network.models.mechanic.MachineWeb
 import data.network.models.user.UserWeb
-import domain.mechanic.Machine
 import domain.user.User
 import domain.user.UserRequest
 import io.ktor.client.*
@@ -16,13 +15,12 @@ import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.bodyAsBytes
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
 import ru.bogdan.core_api.BuildConfig
-import java.io.File
 import javax.inject.Inject
 
 private const val BASE_URL = BuildConfig.BASE_URL
@@ -83,7 +81,6 @@ class NetWorkClientApplication @Inject constructor(
     suspend fun refreshToken() = httpClient.post("$BASE_URL/token/refresh") {
         //TODO
     }
-
 
 
     suspend fun getUserById(id: String) = httpClient.get("$BASE_URL/users/$id").body<UserWeb>()

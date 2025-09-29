@@ -390,6 +390,7 @@ fun YearsRangeFilter(
                 rangeSliderState.activeRangeStart.toInt(),
                 rangeSliderState.activeRangeEnd.toInt()
             ),
+            color = Emerald,
         )
     }
 }
