@@ -33,6 +33,7 @@ dependencies {
     //modules
     implementation(project(":modules:core:core_ui"))
     implementation(project(":modules:core:core_api"))
+    implementation(project(":modules:core:core_factory"))
     implementation(project(":modules:features:login_feature"))
     implementation(project(":modules:features:home_screen_feature"))
     implementation(project(":modules:features:machine_list"))

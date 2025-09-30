@@ -130,9 +130,11 @@ private fun UserCardPreview(
         strokeWidth = 30.dp,
         colorNearPhoto = Emerald.copy(0.8f),
         dataContent = {
-            Box(modifier = Modifier
-                .size(40.dp)
-                .background(Color.White))
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(Color.White)
+            )
         },
         nameContent = {
             Column(modifier = Modifier.fillMaxWidth()) {

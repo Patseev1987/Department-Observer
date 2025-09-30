@@ -10,9 +10,14 @@ import javax.inject.Singleton
     modules = [MachineListViewModelModule::class],
     dependencies = [CoreProvider::class]
 )
-interface MachinesListComponent : CoreProvider {
+interface MachinesListComponent {
 
     fun getViewModelFactory(): ViewModelFactory
+
+    companion object {
+        fun create(coreProvider: CoreProvider): MachinesListComponent =
+            DaggerMachinesListComponent.factory().create(coreProvider)
+    }
 
     @Component.Factory
     interface Factory {

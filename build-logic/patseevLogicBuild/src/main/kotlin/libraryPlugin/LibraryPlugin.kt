@@ -1,7 +1,6 @@
 package libraryPlugin
 
 import androidConfig
-import com.android.build.api.dsl.ApplicationDefaultConfig
 import com.android.build.api.dsl.LibraryDefaultConfig
 import libs
 import org.gradle.api.Plugin

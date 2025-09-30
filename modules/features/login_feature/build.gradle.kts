@@ -13,9 +13,9 @@ android {
         }
     }
 
-    defaultConfig{
-        missingDimensionStrategy("environment","prod")
-        missingDimensionStrategy("environment","dev")
+    defaultConfig {
+        missingDimensionStrategy("environment", "prod")
+        missingDimensionStrategy("environment", "dev")
     }
 }
 

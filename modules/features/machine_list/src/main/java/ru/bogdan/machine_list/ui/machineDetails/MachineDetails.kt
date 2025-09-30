@@ -1,10 +1,8 @@
 package ru.bogdan.machine_list.ui.machineDetails
 
-import android.widget.Button
 import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,11 +29,7 @@ import ru.bogdan.core_ui.R
 import ru.bogdan.core_ui.ui.common.box.BoxWithBackgroundPhoto
 import ru.bogdan.core_ui.ui.common.button.AppOutlinedButton
 import ru.bogdan.core_ui.ui.common.loadingModifier.loadingShimmer
-import ru.bogdan.core_ui.ui.theme.AppTypography
-import ru.bogdan.core_ui.ui.theme.Beige
-import ru.bogdan.core_ui.ui.theme.Emerald
-import ru.bogdan.core_ui.ui.theme.LocalAppTypography
-import ru.bogdan.core_ui.ui.theme.LocalSpacing
+import ru.bogdan.core_ui.ui.theme.*
 import ru.bogdan.machine_list.utils.getMachineDetailsComponent
 
 @Composable
@@ -93,7 +87,7 @@ fun MachineDetailsContent(
     onExpandChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     onDocClicked: (MachineDocument) -> Unit,
-    onAcceptClicked:() -> Unit,
+    onAcceptClicked: () -> Unit,
 ) {
     val state = machineState.value
     val spacing = LocalSpacing.current
@@ -195,7 +189,7 @@ fun MachineDetailsContent(
                     }
                 }
                 if (state.docs.isNotEmpty()) {
-                    item{
+                    item {
                         SheetWithTitle(
                             title = stringResource(R.string.doc_title),
                             data = state.docs,
@@ -208,7 +202,7 @@ fun MachineDetailsContent(
                                     doc = it
                                 )
                             }
-                        ){
+                        ) {
                             onDocClicked(it)
                         }
                     }
@@ -229,7 +223,7 @@ fun MachineDetailsContent(
             ) {
                 Column(
                     modifier = Modifier.padding(spacing.medium),
-                ){
+                ) {
                     Text(
                         text = stringResource(R.string.do_you_want, state.docName),
                     )
@@ -237,15 +231,15 @@ fun MachineDetailsContent(
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround
-                    ){
+                    ) {
                         AppOutlinedButton(
                             onClick = onDismissRequest,
                             color = Color.Black,
                         ) {
-                             Text(
-                                text = stringResource( R.string.cancel),
+                            Text(
+                                text = stringResource(R.string.cancel),
                                 color = Color.Black,
-                                 fontSize = 20.sp
+                                fontSize = 20.sp
                             )
                         }
                         AppOutlinedButton(
@@ -253,7 +247,7 @@ fun MachineDetailsContent(
                             color = Color.Black,
                         ) {
                             Text(
-                                text = stringResource( R.string.accept),
+                                text = stringResource(R.string.accept),
                                 color = Color.Black,
                                 fontSize = 20.sp
                             )
@@ -266,7 +260,6 @@ fun MachineDetailsContent(
         }
     }
 }
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)

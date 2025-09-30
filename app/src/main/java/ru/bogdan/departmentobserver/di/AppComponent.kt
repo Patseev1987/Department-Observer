@@ -10,6 +10,11 @@ import javax.inject.Singleton
 )
 interface AppComponent : CoreProvider {
 
+    companion object {
+        fun create(coreProvider: CoreProvider): AppComponent =
+            DaggerAppComponent.factory().create(coreProvider = coreProvider)
+    }
+
 
     @Component.Factory
     interface Factory {

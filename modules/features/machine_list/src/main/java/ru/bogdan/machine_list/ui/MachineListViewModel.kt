@@ -1,10 +1,9 @@
 package ru.bogdan.machine_list.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import data.network.NetworkRepository
-import data.resorseMenager.ResourceManager
+import data.NetworkRepository
+import data.ResourceManager
 import domain.mechanic.Machine
 import domain.mechanic.MachineModel
 import domain.mechanic.MachineState
@@ -126,19 +125,19 @@ class MachineListViewModel @Inject constructor(
                 statesForFilters.clear()
                 filters.clear()
                 yearsRangeFilter = machines.getYearsRangeFromMachines()
-                    _state.update {
-                        it.copy(
-                            machines = machines,
-                            filterState = MachineListFilterState(
-                                typeDescriptions = getTypeDescriptions(resourceManager),
-                                stateDescriptions = getStateDescriptions(resourceManager),
-                                maxYear = machines.maxOfOrNull { it.yearOfManufacture } ?: 0,
-                                minYear = machines.minOfOrNull { it.yearOfManufacture } ?: 0,
-                                yearFilter = yearsRangeFilter
-                            ),
-                            isFiltersShow = false
-                        )
-                    }
+                _state.update {
+                    it.copy(
+                        machines = machines,
+                        filterState = MachineListFilterState(
+                            typeDescriptions = getTypeDescriptions(resourceManager),
+                            stateDescriptions = getStateDescriptions(resourceManager),
+                            maxYear = machines.maxOfOrNull { it.yearOfManufacture } ?: 0,
+                            minYear = machines.minOfOrNull { it.yearOfManufacture } ?: 0,
+                            yearFilter = yearsRangeFilter
+                        ),
+                        isFiltersShow = false
+                    )
+                }
             }
 
             is MachineListIntent.ApplyFilters -> {
@@ -191,7 +190,7 @@ class MachineListViewModel @Inject constructor(
         }
     }
 
-    private fun getMachines(){
+    private fun getMachines() {
         viewModelScope.launch {
             val result = networkRepository.getMachines()
             result.onSuccess { list ->

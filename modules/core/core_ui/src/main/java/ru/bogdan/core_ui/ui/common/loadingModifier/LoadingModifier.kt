@@ -65,7 +65,8 @@ private fun LoadingShimmerPreview() {
             )
     )
 }
+
 @Composable
 fun Dp.toPx(): Float {
-   return this.value * LocalDensity.current.density
+    return this.value * LocalDensity.current.density
 }

@@ -1,31 +1,29 @@
 package ru.bogdan.machine_list.utils
 
-import CoreProviderFactory
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import data.resorseMenager.ResourceManager
+import data.ResourceManager
+import di.DependenciesProvider
 import domain.mechanic.MachineState
 import domain.mechanic.MachineType
 import ru.bogdan.core_ui.R
-import ru.bogdan.machine_list.di.DaggerMachinesDetailsComponent
-import ru.bogdan.machine_list.di.DaggerMachinesListComponent
 import ru.bogdan.machine_list.di.MachinesDetailsComponent
 import ru.bogdan.machine_list.di.MachinesListComponent
 
 @Composable
 fun getMachineListComponent(): MachinesListComponent {
-    val context = LocalContext.current
-    return remember { DaggerMachinesListComponent.factory().create(CoreProviderFactory.create(context)) }
+    val coreProvider = (LocalContext.current.applicationContext as DependenciesProvider).getCoreProvider()
+    return remember { MachinesListComponent.create(coreProvider) }
 }
 
 @Composable
 fun getMachineDetailsComponent(machineId: String): MachinesDetailsComponent {
-    val context = LocalContext.current
-    return remember { DaggerMachinesDetailsComponent.factory().create(CoreProviderFactory.create(context), machineId) }
+    val coreProvider = (LocalContext.current.applicationContext as DependenciesProvider).getCoreProvider()
+    return remember { MachinesDetailsComponent.create(coreProvider, machineId) }
 }
 
- fun getTypeDescriptions(resourceManager: ResourceManager): List<String> {
+fun getTypeDescriptions(resourceManager: ResourceManager): List<String> {
     val tempList = mutableListOf<String>()
     MachineType.entries.forEach { type ->
         when (type) {
@@ -54,7 +52,7 @@ fun getMachineDetailsComponent(machineId: String): MachinesDetailsComponent {
 }
 
 fun MachineType.getTypeDescription(resourceManager: ResourceManager): String {
-   return when(this){
+    return when (this) {
         MachineType.TURNING -> {
             resourceManager.getString(R.string.turning)
         }
@@ -77,7 +75,7 @@ fun MachineType.getTypeDescription(resourceManager: ResourceManager): String {
     }
 }
 
- fun getStateDescriptions( resourceManager: ResourceManager): List<String> {
+fun getStateDescriptions(resourceManager: ResourceManager): List<String> {
     val tempList = mutableListOf<String>()
     MachineState.entries.forEach { state ->
         when (state) {
@@ -98,7 +96,7 @@ fun MachineType.getTypeDescription(resourceManager: ResourceManager): String {
 }
 
 fun MachineState.getStateDescription(resourceManager: ResourceManager): String {
-    return when(this){
+    return when (this) {
         MachineState.WORKING -> {
             resourceManager.getString(R.string.working)
         }

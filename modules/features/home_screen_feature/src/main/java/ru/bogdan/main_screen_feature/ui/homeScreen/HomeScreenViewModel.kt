@@ -1,18 +1,16 @@
 package ru.bogdan.main_screen_feature.ui.homeScreen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import data.dataStore.DataStoreManager
-import data.network.NetworkRepository
-import data.resorseMenager.ResourceManager
+import data.DataStoreManager
+import data.NetworkRepository
+import data.ResourceManager
 import domain.mechanic.Machine
 import domain.mechanic.MachineState
 import domain.user.Role
 import domain.user.User
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.bogdan.core_ui.R

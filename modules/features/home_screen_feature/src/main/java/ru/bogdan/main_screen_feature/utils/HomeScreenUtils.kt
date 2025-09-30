@@ -1,16 +1,15 @@
 package ru.bogdan.main_screen_feature.utils
 
-import CoreProviderFactory
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import ru.bogdan.main_screen_feature.di.DaggerHomeScreenComponent
+import di.DependenciesProvider
 import ru.bogdan.main_screen_feature.di.HomeScreenComponent
 
 @Composable
 fun getHomeScreenComponent(): HomeScreenComponent {
-    val context = LocalContext.current
+    val coreProvider = (LocalContext.current.applicationContext as DependenciesProvider).getCoreProvider()
     return remember {
-        DaggerHomeScreenComponent.factory().create(CoreProviderFactory.create(context))
+        HomeScreenComponent.create(coreProvider)
     }
 }

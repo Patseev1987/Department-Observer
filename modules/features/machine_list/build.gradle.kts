@@ -11,9 +11,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    defaultConfig{
-        missingDimensionStrategy("environment","prod")
-        missingDimensionStrategy("environment","dev")
+    defaultConfig {
+        missingDimensionStrategy("environment", "prod")
+        missingDimensionStrategy("environment", "dev")
     }
 }
 

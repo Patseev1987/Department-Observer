@@ -1,6 +1,5 @@
 package ru.bogdan.main_screen_feature.ui.homeScreen
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -393,9 +392,11 @@ fun InfoList(
                             style = typography.bodyLarge
                         )
                         Spacer(Modifier.width(spacing.small))
-                        Column(modifier = Modifier
-                            .padding(spacing.extraSmall)
-                            .weight(1f)) {
+                        Column(
+                            modifier = Modifier
+                                .padding(spacing.extraSmall)
+                                .weight(1f)
+                        ) {
                             Text(
                                 modifier = Modifier
                                     .padding(start = spacing.medium),

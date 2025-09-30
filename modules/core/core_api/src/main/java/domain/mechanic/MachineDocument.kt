@@ -8,8 +8,8 @@ data class MachineDocument(
     val name: String,
     val description: String,
     val machineModel: MachineModel,
-){
-    companion object{
+) {
+    companion object {
         val NONE = MachineDocument(
             "1",
             "2",

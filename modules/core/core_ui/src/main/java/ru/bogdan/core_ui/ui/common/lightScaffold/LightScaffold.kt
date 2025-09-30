@@ -30,7 +30,7 @@ fun LightScaffold(
     val bottomBarHeight = remember {
         if (bottomBar == null) 0.dp else 56.dp
     }
-val spacing = LocalSpacing.current
+    val spacing = LocalSpacing.current
 
     Box(
         modifier = modifier,

@@ -44,5 +44,5 @@ fun PreviewAppOutlinedButton() {
     AppOutlinedButton(
         onClick = {},
         color = Color.Red,
-    ){}
+    ) {}
 }

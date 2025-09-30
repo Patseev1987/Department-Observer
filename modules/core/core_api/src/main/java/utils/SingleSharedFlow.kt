@@ -1,12 +1,11 @@
 package utils
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.ExperimentalForInheritanceCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
-@OptIn(ExperimentalForInheritanceCoroutinesApi::class)
+
 class SingleSharedFlow<T> : MutableSharedFlow<T> {
 
     private val mutableSharedFlow = MutableSharedFlow<T>(replay = 1)

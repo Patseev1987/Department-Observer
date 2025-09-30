@@ -2,9 +2,9 @@ package ru.bogdan.login_feature.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import data.dataStore.DataStoreManager
-import data.network.NetworkRepository
-import data.resorseMenager.ResourceManager
+import data.DataStoreManager
+import data.NetworkRepository
+import data.ResourceManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*

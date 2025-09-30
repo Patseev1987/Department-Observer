@@ -15,9 +15,9 @@ android {
     kotlinOptions {
         freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
     }
-    defaultConfig{
-        missingDimensionStrategy("environment","prod")
-        missingDimensionStrategy("environment","dev")
+    defaultConfig {
+        missingDimensionStrategy("environment", "prod")
+        missingDimensionStrategy("environment", "dev")
     }
 }
 

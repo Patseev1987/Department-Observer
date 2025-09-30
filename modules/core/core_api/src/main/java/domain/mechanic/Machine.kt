@@ -39,7 +39,7 @@ data class Machine(
 }
 
 @Serializable
-enum class MachineModel(val model:String){
+enum class MachineModel(val model: String) {
     T_16K20("16K20"),
     T_CTN500_MY("CTN500 MY"),
     X6436("X6436"),

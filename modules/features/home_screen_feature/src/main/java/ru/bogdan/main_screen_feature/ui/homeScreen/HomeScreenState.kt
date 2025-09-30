@@ -4,8 +4,6 @@ import androidx.compose.ui.graphics.Color
 import domain.info.Info
 import domain.mechanic.Machine
 import domain.mechanic.MachineState
-import ru.bogdan.core_ui.ui.theme.LightRed
-import ru.bogdan.core_ui.ui.theme.Tiffany
 
 data class HomeScreenState(
     val photo: String? = null,

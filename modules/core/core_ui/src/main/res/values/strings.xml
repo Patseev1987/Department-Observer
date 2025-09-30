@@ -32,7 +32,7 @@
     <string name="do_you_want">Do you want to download file \n%s?</string>
     <string name="cancel">Cancel</string>
     <string name="accept">Accept</string>
-<!--    Machine List-->
+    <!--    Machine List-->
     <string name="moldel_filter">Machine model</string>
     <string name="type_filter">Machine type</string>
     <string name="state_filter">Machine state</string>

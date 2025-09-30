@@ -2,18 +2,14 @@ package ru.bogdan.machine_list.ui.machineDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import data.fileManager.FileManager
-import data.network.NetworkRepository
-import data.resorseMenager.ResourceManager
+import data.FileManager
+import data.NetworkRepository
+import data.ResourceManager
 import domain.mechanic.Machine
 import domain.mechanic.MachineDocument
 import domain.mechanic.MachineState
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ru.bogdan.core_ui.R
 import ru.bogdan.core_ui.ui.common.extansions.getColor
 import ru.bogdan.machine_list.di.MachineId
@@ -37,7 +33,7 @@ class MachineDetailsViewModel @Inject constructor(
     val uiAction = _uiAction.asSharedFlow()
 
     private var machine: Machine = Machine.NONE
-    private var doc : MachineDocument = MachineDocument.NONE
+    private var doc: MachineDocument = MachineDocument.NONE
     private var downloadJob: Job? = null
 
     init {
@@ -96,7 +92,7 @@ class MachineDetailsViewModel @Inject constructor(
             }
 
             is MachineDetailsIntent.SaveDoc -> {
-                if(doc == MachineDocument.NONE) return
+                if (doc == MachineDocument.NONE) return
                 saveFileToDownload(fileManager, doc)
                 doc = MachineDocument.NONE
                 _state.update {
@@ -159,7 +155,7 @@ class MachineDetailsViewModel @Inject constructor(
             downloadJob?.cancel()
         }
         downloadJob = viewModelScope.launch(CoroutineExceptionHandler { _, exception ->
-                       _uiAction.tryEmit(
+            _uiAction.tryEmit(
                 MachineDetailsUiAction.ShowToast(
                     resourceManager.getString(
                         R.string.file_not_downloaded,
@@ -187,7 +183,7 @@ class MachineDetailsViewModel @Inject constructor(
                 _state.update { state -> state.copy(isLoading = false) }
             }
                 .onFailure { throwable ->
-                        throw throwable
+                    throw throwable
                 }
         }
     }

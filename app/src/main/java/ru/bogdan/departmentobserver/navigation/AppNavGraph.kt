@@ -9,12 +9,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
-import androidx.navigation.toRoute
 import navigation.NavigationEvent
 import ru.bogdan.login_feature.ui.LoginScreen
-import ru.bogdan.machine_list.ui.MachineList
-import ru.bogdan.machine_list.ui.machineDetails.MachineDetails
 import ru.bogdan.main_screen_feature.ui.homeScreen.HomeScreen
 
 
@@ -32,7 +28,7 @@ fun AppNavGraph(
                     .fillMaxSize()
                     .padding(paddingValues),
                 onNavigateEvent = { event ->
-                    navHostController.navigate(event){
+                    navHostController.navigate(event) {
                         launchSingleTop = true
                         popUpTo(NavigationEvent.LoginScreen::class) { inclusive = true }
                     }

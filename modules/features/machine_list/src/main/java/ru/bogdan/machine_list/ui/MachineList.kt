@@ -1,7 +1,5 @@
 package ru.bogdan.machine_list.ui
 
-import android.util.Log
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -9,12 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -53,9 +46,9 @@ fun MachineList(
     val state = viewModel.state.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    DisposableEffect (lifecycleOwner, component) {
+    DisposableEffect(lifecycleOwner, component) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME){
+            if (event == Lifecycle.Event.ON_RESUME) {
                 viewModel.handleIntent(MachineListIntent.RefreshData)
             }
         }

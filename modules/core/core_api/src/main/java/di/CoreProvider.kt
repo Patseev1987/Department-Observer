@@ -1,11 +1,7 @@
 package di
 
 import android.content.Context
-import data.dataStore.DataStoreManager
-import data.database.DataBaseRepository
-import data.fileManager.FileManager
-import data.network.NetworkRepository
-import data.resorseMenager.ResourceManager
+import data.*
 import kotlinx.coroutines.CoroutineDispatcher
 
 
