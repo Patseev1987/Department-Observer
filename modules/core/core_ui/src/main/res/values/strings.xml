@@ -14,7 +14,7 @@
     <string name="role_mechanic">Mechanic</string>
     <string name="role_manager">Manager</string>
     <string name="list_of_repair_machines">List of repair machines</string>
-    <string name="info_news">Information</string>
+    <string name="info_news">Turning</string>
     <string name="news">Last news</string>
     <string name="turning">Turning machine</string>
     <string name="turning_cnc">Turning CNC machine</string>

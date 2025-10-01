@@ -135,7 +135,7 @@ fun LoginScreen(
                         viewModel.handleIntent(LoginIntent.LogInPressed)
                     }, color = Emerald
                 ) {
-                    Text("Sing in", color = Emerald, fontSize = 35.sp)
+                    Text(stringResource(R.string.log_in), color = Emerald, fontSize = 35.sp)
                 }
             }
 
@@ -146,9 +146,9 @@ fun LoginScreen(
 @Composable
 fun PasswordTextField(
     value: String,
+    modifier: Modifier = Modifier,
     isError: Boolean = false,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
     hint: String? = null,
     fontSize: TextUnit = 25.sp,
     fontFamily: FontFamily = SansSerif,
@@ -235,9 +235,9 @@ fun PasswordTextField(
 @Composable
 fun LoginTextField(
     value: String,
+    modifier: Modifier = Modifier,
     isError: Boolean = false,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
     hint: String? = null,
     fontSize: TextUnit = 25.sp,
     fontFamily: FontFamily = SansSerif,

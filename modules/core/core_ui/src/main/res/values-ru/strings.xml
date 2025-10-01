@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="log_in">Войти</string>
+    <string name="password">Пароль</string>
+    <string name="login">Логин</string>
+    <string name="succes">Привет %s</string>
+    <string name="repair">Ремонт</string>
+    <string name="working">Работает</string>
+    <string name="pause">Простой</string>
+    <string name="info">Информация об оборудовании</string>
+    <string name="machines_item">Станки</string>
+    <string name="home_item">Главная</string>
+    <string name="role_mechanic">Механик</string>
+    <string name="role_manager">Менеджер</string>
+    <string name="list_of_repair_machines">Список неработСписок ремонтируемого оборудования</string>
+    <string name="news">Последние новости</string>
+    <string name="turning">Токарный</string>
+    <string name="turning_cnc">Токарный с ЧПУ</string>
+    <string name="milling">Фрезерный</string>
+    <string name="milling_horizontal">Горизонтально-фрезерный</string>
+    <string name="milling_universal">Универсально-фрезерный</string>
+    <string name="milling_cnc">Фрезерный с ЧПУ</string>
+    <string name="oils_title">Масла</string>
+    <string name="parts_title">Запасные части</string>
+    <string name="year_of_manufacture">Год выпуска : %s</string>
+    <string name="doc_title">Документация</string>
+    <string name="file_downloaded">Файл %s загружен</string>
+    <string name="file_not_downloaded">Файл %s не загружен</string>
+    <string name="do_you_want">Вы хотите загрузить файл %s?</string>
+    <string name="cancel">Отменить</string>
+    <string name="accept">Принять</string>
+    <string name="years_filter">Год выпуска</string>
+    <string name="years_range">с %1$d до %2$d</string>
+    <string name="apply_filter">Применить</string>
+    <string name="drop_filter">Сбросить</string>
+    <string name="info_news">События</string>
+    <string name="moldel_filter">Модель станка</string>
+    <string name="type_filter">Тип станка</string>
+    <string name="state_filter">Состояние станка</string>
+    <string name="state">Состояние</string>
+</resources>
