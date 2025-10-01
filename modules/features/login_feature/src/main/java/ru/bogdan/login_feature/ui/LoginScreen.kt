@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import navigation.NavigationEvent
 import ru.bogdan.core_ui.R
@@ -65,7 +67,7 @@ fun LoginScreen(
                 }
 
                 is LoginUiAction.ShowToast -> {
-                    scope.launch {
+                    scope.launch(Dispatchers.Main) {
                         Toast.makeText(context, action.message, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -81,7 +83,9 @@ fun LoginScreen(
                 .fillMaxSize()
                 .loadingShimmer(showShimmer = state.value.isLoading, color = Emerald, gradientWidth = 40.dp.value)
                 .background(color = Color.Transparent)
-                .padding(spacing.medium),
+                .padding(spacing.medium)
+                .testTag("Login Screen")
+            ,
         ) {
 
             Box(
@@ -96,6 +100,7 @@ fun LoginScreen(
                     modifier = Modifier
                         .size(200.dp)
                         .clip(RoundedCornerShape(15))
+                        .testTag("icon")
                 )
             }
             Column(
@@ -131,6 +136,7 @@ fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 AppOutlinedButton(
+                    modifier = Modifier.testTag("button_sing_in"),
                     onClick = {
                         viewModel.handleIntent(LoginIntent.LogInPressed)
                     }, color = Emerald
@@ -193,7 +199,8 @@ fun PasswordTextField(
             BasicTextField(
                 modifier = Modifier.onFocusChanged { focusState ->
                     isFocused = focusState.isFocused
-                },
+                }
+                    .testTag("password_field"),
                 value = value,
                 onValueChange = onValueChange,
                 singleLine = true,
@@ -281,7 +288,8 @@ fun LoginTextField(
             BasicTextField(
                 modifier = Modifier.onFocusChanged { focusState ->
                     isFocused = focusState.isFocused
-                },
+                }
+                    .testTag("login_field"),
                 value = value,
                 onValueChange = onValueChange,
                 singleLine = true,

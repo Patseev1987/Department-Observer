@@ -5,12 +5,14 @@ import domain.mechanic.Machine
 import domain.mechanic.MachineDocument
 import domain.mechanic.Oil
 import domain.mechanic.PartOfMachine
+import domain.user.LoginResponse
 import domain.user.User
 import ru.bogdan.core_impl.data.network.models.info.InfoWeb
 import ru.bogdan.core_impl.data.network.models.mechanic.MachineDocumentWeb
 import ru.bogdan.core_impl.data.network.models.mechanic.MachineWeb
 import ru.bogdan.core_impl.data.network.models.mechanic.OilWeb
 import ru.bogdan.core_impl.data.network.models.mechanic.PartOfMachineWeb
+import ru.bogdan.core_impl.data.network.models.user.LoginResponseWeb
 import ru.bogdan.core_impl.data.network.models.user.UserWeb
 
 class MapperWeb {
@@ -82,15 +84,11 @@ class MapperWeb {
         model = machine.model,
     )
 
-    fun userToWeb(user: User) = UserWeb(
-        id = user.id,
-        name = user.name,
-        surname = user.surname,
-        patronymic = user.patronymic,
-        photoUrl = user.photoUrl,
-        role = user.role,
-        accessToken = user.accessToken,
-        refreshToken = user.refreshToken
+    fun loginResponseFromWeb(loginWeb: LoginResponseWeb) = LoginResponse(
+        username = loginWeb.username,
+        userId = loginWeb.userId,
+        token = loginWeb.token,
+        refreshToken = loginWeb.refreshToken
     )
 
     fun userFromWeb(user: UserWeb) = User(

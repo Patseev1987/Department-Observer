@@ -7,8 +7,6 @@ sealed interface MachineListIntent {
     data class SetMachineModelFilter(val model: MachineModel) : MachineListIntent
     data class SetMachineTypeFilter(val type: MachineType) : MachineListIntent
     data class SetMachineYearFilter(val years: IntRange) : MachineListIntent
-    data class SetMachinePartsFilter(val part: PartOfMachine) : MachineListIntent
-    data class SetMachineOilsFilter(val oil: Oil) : MachineListIntent
     data object ChangeFilterShowState : MachineListIntent
     data object DropFilters : MachineListIntent
     data object ApplyFilters : MachineListIntent

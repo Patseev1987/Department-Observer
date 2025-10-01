@@ -10,19 +10,19 @@ val HttpCodesHandlerPlugin = createClientPlugin("HttpCodesHandlerPlugin") {
             }
 
             401 -> {
-                throw RuntimeException("Unauthorized")
+                throw UnauthorizedException()
             }
 
             403 -> {
-                throw RuntimeException("Forbidden")
+                throw ForbiddenException()
             }
 
             in 500..599 -> {
-                throw RuntimeException("Server error")
+                throw ServerErrorException()
             }
 
             else -> {
-                throw RuntimeException("Bad request")
+                throw BadRequestException()
             }
         }
     }

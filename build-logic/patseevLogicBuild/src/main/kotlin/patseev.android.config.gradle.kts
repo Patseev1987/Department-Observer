@@ -41,4 +41,6 @@ dependencies {
     add("androidTestImplementation", libs.androidx.ui.test.junit4)
     add("debugImplementation", libs.androidx.ui.tooling)
     add("debugImplementation", libs.androidx.ui.test.manifest)
+    add("testImplementation", libs.mockito.kotlin)
+    add("testImplementation", libs.kotlinx.coroutines.test)
 }

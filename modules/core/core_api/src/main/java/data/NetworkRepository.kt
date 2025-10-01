@@ -2,11 +2,12 @@ package data
 
 import domain.info.Info
 import domain.mechanic.Machine
+import domain.user.LoginResponse
 import domain.user.User
 
 interface NetworkRepository {
 
-    suspend fun login(login: String, password: String): Result<User>
+    suspend fun login(login: String, password: String): Result<LoginResponse>
 
     suspend fun logout()
 

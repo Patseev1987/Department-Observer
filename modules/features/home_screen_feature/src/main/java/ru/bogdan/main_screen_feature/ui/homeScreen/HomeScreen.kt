@@ -23,6 +23,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
@@ -54,7 +55,7 @@ fun HomeScreen(modifier: Modifier) {
         drawableId = R.drawable.user_card,
     ) {
         UserCard(
-            modifier = modifier,
+            modifier = modifier.testTag("user_card"),
             imageSize = 200.dp,
             strokeWidth = 15.dp,
             colorNearPhoto = Emerald,
@@ -79,7 +80,7 @@ fun HomeScreen(modifier: Modifier) {
                     }
                     item {
                         PaiChart(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().testTag("pai_chart"),
                             state = state,
                         ) {
                             viewModel.handleIntent(HomeScreenIntent.ShowRepairList(it))
@@ -88,7 +89,7 @@ fun HomeScreen(modifier: Modifier) {
 
                     item {
                         InfoList(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().testTag("info_list"),
                             state = state,
                             onClick = { viewModel.handleIntent(HomeScreenIntent.ShowInfoList(it)) }
                         )
@@ -236,7 +237,8 @@ fun PaiChart(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = spacing.small),
+                        .padding(top = spacing.small)
+                        .testTag("repair_list"),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(spacing.small),
                 ) {
@@ -369,7 +371,7 @@ fun InfoList(
             ) {
                 item {
                     Text(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().testTag("news"),
                         text = stringResource(R.string.info_news),
                         textAlign = TextAlign.Center,
                         style = typography.bodyNormal,

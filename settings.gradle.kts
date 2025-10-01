@@ -33,3 +33,5 @@ include(":modules:features:home_screen_feature")
 include(":modules:features:machine_list")
 include(":modules:core:core_factory")
 include(":modules:core:core_impl")
+
+include("common-tests")

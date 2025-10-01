@@ -31,9 +31,11 @@ data class MachineWeb(
             state = MachineState.WORKING,
             type = MachineType.TURNING,
             docs = emptyList(),
-            oils = mapOf(),
+            oils = mapOf(
+                OilWeb.NONE to 45
+            ),
             parts = mapOf(),
-            yearOfManufacture = 1977,
+            yearOfManufacture = 1947,
             model = MachineModel.T_16K20
         )
     }

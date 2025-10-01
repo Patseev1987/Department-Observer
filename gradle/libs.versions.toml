@@ -24,7 +24,6 @@ datastore = "1.1.7"
 runtimeAndroid = "1.9.0"
 material = "1.13.0"
 composePlugin = "1.8.2"
-
 java = "17"
 compileSdk = "36"
 targetSdk = "36"
@@ -71,7 +70,6 @@ room-test = { module = "androidx.room:room-testing", version.ref = "room" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-
 gradleplugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 gradleplugin-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "composePlugin" }
 gradleplugin-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }

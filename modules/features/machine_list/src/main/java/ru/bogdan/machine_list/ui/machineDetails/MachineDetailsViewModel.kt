@@ -63,7 +63,6 @@ class MachineDetailsViewModel @Inject constructor(
             }
 
             is MachineDetailsIntent.HideStates -> {
-
                 _state.update {
                     it.copy(
                         expanded = false,
@@ -92,7 +91,7 @@ class MachineDetailsViewModel @Inject constructor(
             }
 
             is MachineDetailsIntent.SaveDoc -> {
-                if (doc == MachineDocument.NONE) return
+                  if (doc == MachineDocument.NONE) return
                 saveFileToDownload(fileManager, doc)
                 doc = MachineDocument.NONE
                 _state.update {
@@ -107,8 +106,11 @@ class MachineDetailsViewModel @Inject constructor(
 
     private fun getMachine(machineId: String) {
         viewModelScope.launch {
-            val machines = networkRepository.getMachineById(machineId)
-            machines.onSuccess {
+            _state.value = _state.value.copy(isLoading = true)
+            val result = withContext(dispatcher) {
+                networkRepository.getMachineById(machineId)
+            }
+            result.onSuccess {
                 machine = it
                 _state.value = _state.value.copy(
                     isLoading = false,
@@ -127,6 +129,7 @@ class MachineDetailsViewModel @Inject constructor(
                 )
             }
                 .onFailure { error ->
+                    _state.value = _state.value.copy(isLoading = false)
                     _uiAction.tryEmit(MachineDetailsUiAction.ShowToast(error.message ?: ""))
                 }
         }
@@ -154,7 +157,7 @@ class MachineDetailsViewModel @Inject constructor(
         if (downloadJob?.isActive == true) {
             downloadJob?.cancel()
         }
-        downloadJob = viewModelScope.launch(CoroutineExceptionHandler { _, exception ->
+        downloadJob = viewModelScope.launch(CoroutineExceptionHandler { _, _ ->
             _uiAction.tryEmit(
                 MachineDetailsUiAction.ShowToast(
                     resourceManager.getString(
@@ -166,11 +169,10 @@ class MachineDetailsViewModel @Inject constructor(
             _state.update { it.copy(isLoading = false) }
         }) {
             _state.update { it.copy(isLoading = true) }
-            val bytes = withContext(dispatcher) {
+            val result = withContext(dispatcher) {
                 networkRepository.downloadDocById(doc.id)
             }
-
-            bytes.onSuccess {
+            result.onSuccess {
                 fileManager.saveFileInDownloads(doc.name, it)
                 _uiAction.tryEmit(
                     MachineDetailsUiAction.ShowToast(
@@ -187,5 +189,4 @@ class MachineDetailsViewModel @Inject constructor(
                 }
         }
     }
-
 }

@@ -24,6 +24,7 @@ android {
 dependencies {
     implementation(project(path = ":modules:core:core_api"))
     implementation(project(path = ":modules:core:core_ui"))
+    testImplementation(project(path = ":common-tests"))
     //Coil
     implementation(libs.coil.network)
     implementation(libs.coil)

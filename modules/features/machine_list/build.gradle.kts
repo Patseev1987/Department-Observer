@@ -23,5 +23,6 @@ dependencies {
     //Coil
     implementation(libs.coil.network)
     implementation(libs.coil)
-
+    //Tests
+    testImplementation(project(path = ":common-tests"))
 }

@@ -9,6 +9,7 @@ import domain.mechanic.MachineModel
 import domain.mechanic.MachineState
 import domain.mechanic.MachineType
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,9 +25,6 @@ class MachineListViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(MachineListState())
     val state: StateFlow<MachineListState> = _state.asStateFlow()
-
-    private val _uiAction = SingleSharedFlow<MachineListUiAction>()
-    val uiAction = _uiAction.asSharedFlow()
 
     private val machines: MutableList<Machine> = mutableListOf()
     private val filters: MutableList<(Machine) -> Boolean> = mutableListOf()
@@ -59,22 +57,6 @@ class MachineListViewModel @Inject constructor(
                             modeFilter = modelsForFilters.toList()
                         )
                     )
-                }
-            }
-
-            is MachineListIntent.SetMachineOilsFilter -> {
-                if (_state.value.isFiltersShow) {
-                    filters.add {
-                        it.oils.keys.contains(intent.oil)
-                    }
-                }
-            }
-
-            is MachineListIntent.SetMachinePartsFilter -> {
-                if (_state.value.isFiltersShow) {
-                    filters.add {
-                        it.parts.keys.contains(intent.part)
-                    }
                 }
             }
 
@@ -173,7 +155,9 @@ class MachineListViewModel @Inject constructor(
             _state.value = _state.value.copy(
                 isLoading = true,
             )
-            val result = networkRepository.getMachines()
+            val result = withContext(dispatcher){
+                networkRepository.getMachines()
+            }
             result.onSuccess { list ->
                 machines.clear()
                 machines.addAll(list)
@@ -185,31 +169,30 @@ class MachineListViewModel @Inject constructor(
                     },
                 )
             }
-                .onFailure { error ->
-                }
         }
     }
 
     private fun getMachines() {
         viewModelScope.launch {
-            val result = networkRepository.getMachines()
-            result.onSuccess { list ->
-                machines.addAll(list)
-                yearsRangeFilter = list.getYearsRangeFromMachines()
-                _state.value = _state.value.copy(
-                    isLoading = false,
-                    machines = machines.toList(),
-                    filterState = MachineListFilterState(
-                        typeDescriptions = getTypeDescriptions(resourceManager),
-                        stateDescriptions = getStateDescriptions(resourceManager),
-                        maxYear = machines.maxOfOrNull { it.yearOfManufacture } ?: 0,
-                        minYear = machines.minOfOrNull { it.yearOfManufacture } ?: 0,
-                        yearFilter = yearsRangeFilter
-                    )
-                )
-            }
-                .onFailure { error ->
-                }
+            _state.update { it.copy(isLoading = true) }
+             withContext(dispatcher) {
+                 networkRepository.getMachines()
+                 .onSuccess { list ->
+                     machines.addAll(list)
+                     yearsRangeFilter = list.getYearsRangeFromMachines()
+                     _state.value = _state.value.copy(
+                         isLoading = false,
+                         machines = machines.toList(),
+                         filterState = MachineListFilterState(
+                             typeDescriptions = getTypeDescriptions(resourceManager),
+                             stateDescriptions = getStateDescriptions(resourceManager),
+                             maxYear = machines.maxOfOrNull { it.yearOfManufacture } ?: 0,
+                             minYear = machines.minOfOrNull { it.yearOfManufacture } ?: 0,
+                             yearFilter = yearsRangeFilter
+                         )
+                     )
+                 }
+             }
         }
     }
 

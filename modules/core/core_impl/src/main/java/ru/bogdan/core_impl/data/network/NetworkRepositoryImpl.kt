@@ -3,6 +3,7 @@ package ru.bogdan.core_impl.data.network
 import data.NetworkRepository
 import domain.info.Info
 import domain.mechanic.Machine
+import domain.user.LoginResponse
 import domain.user.User
 import ru.bogdan.core_impl.data.network.mapers.MapperWeb
 import java.security.MessageDigest
@@ -13,15 +14,15 @@ class NetworkRepositoryImpl @Inject constructor(
     private val mapperWeb: MapperWeb
 ) : NetworkRepository {
 
-    override suspend fun login(login: String, password: String): Result<User> {
+    override suspend fun login(login: String, password: String): Result<LoginResponse> {
         val md5 = MessageDigest.getInstance("MD5")
         val bytes = md5.digest(password.toByteArray())
         val passwordHash = bytes.toHexString()
-        return runCatching { client.login(login, passwordHash) }
+        return runCatching { mapperWeb.loginResponseFromWeb(client.login(login, passwordHash)) }
     }
 
     override suspend fun logout() {
-        TODO("Not yet implemented")
+        client.logout()
     }
 
     override suspend fun refreshToken(): Result<User> {

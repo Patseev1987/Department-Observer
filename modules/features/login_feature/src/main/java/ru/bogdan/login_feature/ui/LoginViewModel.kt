@@ -1,5 +1,6 @@
 package ru.bogdan.login_feature.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.DataStoreManager
@@ -40,17 +41,17 @@ class LoginViewModel @Inject constructor(
                 viewModelScope.launch {
                     _state.update { it.copy(isLoading = true) }
                     delay(1000)
-                    withContext(dispatcher) {
+                   withContext(dispatcher) {
                         networkRepository.login(
                             login = _state.value.login,
                             password = _state.value.password
                         )
-                            .onSuccess { user ->
-                                dataStoreManager.saveAccessTokens(user.accessToken, user.refreshToken, user.id)
+                            .onSuccess { loginResponse ->
+                                dataStoreManager.saveAccessTokens(loginResponse.token, loginResponse.refreshToken, loginResponse.userId)
                                 _state.update { it.copy(isLoading = false) }
                                 _uiAction.emit(
                                     LoginUiAction.ShowToast(
-                                        resourceManager.getString(R.string.succes, user.name)
+                                        resourceManager.getString(R.string.succes, loginResponse.username)
                                     )
                                 )
                                 delay(400)

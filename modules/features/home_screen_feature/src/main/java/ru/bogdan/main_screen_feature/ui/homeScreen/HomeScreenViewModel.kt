@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.bogdan.core_ui.R
 import ru.bogdan.core_ui.ui.common.extansions.getColor
 import utils.SingleSharedFlow
@@ -51,38 +52,39 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    private fun prepareData(dataStoreManager: DataStoreManager) = viewModelScope.launch(dispatcher) {
+    private fun prepareData(dataStoreManager: DataStoreManager) = viewModelScope.launch {
         val userId = dataStoreManager.userId.first() ?: ""
         val tempUser = async { networkRepository.getUserById(userId) }
         val tempMachines = async { networkRepository.getMachines() }
         val tempInfo = async { networkRepository.getInfo() }
-
-        user = tempUser.await()
-        machines = tempMachines.await()
-        user.onSuccess { user ->
-            machines.onSuccess { machines ->
-                _state.update {
-                    it.copy(
-                        name = user.name,
-                        surname = user.surname,
-                        patronymic = user.patronymic,
-                        photo = user.photoUrl,
-                        role = getStringFromRole(user.role),
-                        isLoading = false,
-                        infoAboutMachines = getInfoAboutMachines(machines),
-                        machines = machines,
-                        repairList = machines.filter { it.state == MachineState.REPAIR },
-                        info = tempInfo.await().getOrThrow()
-                    )
+        withContext(dispatcher) {
+            user = tempUser.await()
+            machines = tempMachines.await()
+            user.onSuccess { user ->
+                machines.onSuccess { machines ->
+                    _state.update {
+                        it.copy(
+                            name = user.name,
+                            surname = user.surname,
+                            patronymic = user.patronymic,
+                            photo = user.photoUrl,
+                            role = getStringFromRole(user.role),
+                            isLoading = false,
+                            infoAboutMachines = getInfoAboutMachines(machines),
+                            machines = machines,
+                            repairList = machines.filter { it.state == MachineState.REPAIR },
+                            info = tempInfo.await().getOrThrow()
+                        )
+                    }
                 }
+                    .onFailure { throwable ->
+                        _uiAction.emit(HomeScreenUiAction.ShowToast(throwable.message ?: ""))
+                    }
             }
                 .onFailure { throwable ->
                     _uiAction.emit(HomeScreenUiAction.ShowToast(throwable.message ?: ""))
                 }
         }
-            .onFailure { throwable ->
-                _uiAction.emit(HomeScreenUiAction.ShowToast(throwable.message ?: ""))
-            }
     }
 
     private fun getInfoAboutMachines(machines: List<Machine>): List<InfoAboutMachines> {

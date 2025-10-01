@@ -1,7 +1,6 @@
 package ru.bogdan.core_impl.data.network
 
 import data.DataStoreManager
-import domain.user.User
 import domain.user.UserRequest
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -20,6 +19,7 @@ import kotlinx.serialization.json.Json
 import ru.bogdan.core_impl.BuildConfig
 import ru.bogdan.core_impl.data.network.models.info.InfoWeb
 import ru.bogdan.core_impl.data.network.models.mechanic.MachineWeb
+import ru.bogdan.core_impl.data.network.models.user.LoginResponseWeb
 import ru.bogdan.core_impl.data.network.models.user.UserWeb
 import javax.inject.Inject
 
@@ -62,12 +62,11 @@ class NetWorkClientApplication @Inject constructor(
                         refreshToken = refreshToken,
                     )
                 }
-
             }
         }
     }
 
-    suspend fun login(login: String, password: String): User {
+    suspend fun login(login: String, password: String): LoginResponseWeb {
 
         val response = httpClient.post("$BASE_URL/login") {
             contentType(ContentType.Application.Json)
