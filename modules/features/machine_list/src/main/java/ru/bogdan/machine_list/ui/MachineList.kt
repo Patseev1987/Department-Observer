@@ -1,5 +1,6 @@
 package ru.bogdan.machine_list.ui
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +23,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import domain.mechanic.MachineModel
 import domain.mechanic.MachineState
 import domain.mechanic.MachineType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import navigation.NavigationEvent
 import ru.bogdan.core_ui.R
 import ru.bogdan.core_ui.ui.common.box.BoxWithBackgroundPhoto
@@ -38,6 +42,7 @@ import ru.bogdan.machine_list.utils.getMachineListComponent
 @Composable
 fun MachineList(
     onMachineClick: (NavigationEvent.MachineScreen) -> Unit,
+    onNavigateEvent: (NavigationEvent.LoginScreen) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val spacing = LocalSpacing.current
@@ -45,6 +50,19 @@ fun MachineList(
     val viewModel: MachineListViewModel = viewModel(factory = component.getViewModelFactory())
     val state = viewModel.state.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current
+
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.uiAction.collect { action ->
+            when (action) {
+                is MachineListUiAction.GoToLoginScreen -> {
+                    onNavigateEvent(NavigationEvent.LoginScreen)
+                }
+            }
+        }
+    }
 
     DisposableEffect(lifecycleOwner, component) {
         val observer = LifecycleEventObserver { _, event ->
@@ -137,7 +155,8 @@ fun MachineListContent(
 private fun PreviewMachineList() {
     MachineList(
         modifier = Modifier.fillMaxSize(),
-        onMachineClick = {})
+        onMachineClick = {},
+        onNavigateEvent = {},)
 }
 
 @Composable

@@ -4,7 +4,7 @@ plugins {
 
 detekt {
     toolVersion = libs.versions.detekt.get()
-    config.setFrom(files("../config/detekt/detekt.yml","$rootDir/detekt-rules/src/main/resources/config.yml"))
+    config.setFrom(files("../config/detekt/detekt.yml", "$rootDir/detekt-rules/src/main/resources/config.yml"))
     buildUponDefaultConfig = true
 }
 
@@ -51,8 +51,8 @@ dependencies {
 
     //tests
     testImplementation(project(path = ":common-tests"))
-    androidTestImplementation ("com.kaspersky.android-components:kaspresso:1.6.0")
-    androidTestImplementation ("com.kaspersky.android-components:kaspresso-compose-support:1.6.0")
+    androidTestImplementation("com.kaspersky.android-components:kaspresso:1.6.0")
+    androidTestImplementation("com.kaspersky.android-components:kaspresso-compose-support:1.6.0")
     androidTestImplementation("io.github.kakaocup:compose:1.0.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.9.2")
     androidTestImplementation("androidx.test:rules:1.7.0")

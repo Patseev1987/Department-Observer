@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.bogdan.core_ui.R
 import utils.SingleSharedFlow
+import utils.exceptions.UnauthorizedException
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
@@ -41,13 +42,17 @@ class LoginViewModel @Inject constructor(
                 viewModelScope.launch {
                     _state.update { it.copy(isLoading = true) }
                     delay(1000)
-                   withContext(dispatcher) {
+                    withContext(dispatcher) {
                         networkRepository.login(
                             login = _state.value.login,
                             password = _state.value.password
                         )
                             .onSuccess { loginResponse ->
-                                dataStoreManager.saveAccessTokens(loginResponse.token, loginResponse.refreshToken, loginResponse.userId)
+                                dataStoreManager.saveAccessTokens(
+                                    loginResponse.token,
+                                    loginResponse.refreshToken,
+                                    loginResponse.userId
+                                )
                                 _state.update { it.copy(isLoading = false) }
                                 _uiAction.emit(
                                     LoginUiAction.ShowToast(
@@ -58,6 +63,15 @@ class LoginViewModel @Inject constructor(
                                 _uiAction.emit(LoginUiAction.GoToMainScreen)
                             }
                             .onFailure { error ->
+                                if (error is UnauthorizedException) {
+                                    val responseToken =
+                                        networkRepository.refreshToken(dataStoreManager.refreshToken.first() ?: "")
+                                            .getOrThrow()
+                                    dataStoreManager.saveAccessTokens(
+                                        responseToken.accessToken,
+                                        responseToken.refreshToken
+                                    )
+                                }
                                 _uiAction.emit(LoginUiAction.ShowToast(error.message ?: ""))
                                 _state.update { it.copy(isLoading = false) }
                             }

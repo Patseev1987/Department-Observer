@@ -12,11 +12,11 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import ru.bogdan.core_impl.data.network.NetWorkClientApplication
 import ru.bogdan.core_impl.data.network.NetworkRepositoryImpl
-import ru.bogdan.core_impl.data.network.UnauthorizedException
 import ru.bogdan.core_impl.data.network.mapers.MapperWeb
 import ru.bogdan.core_impl.data.network.models.mechanic.MachineWeb
 import ru.bogdan.core_impl.data.network.models.user.LoginResponseWeb
 import ru.bogdan.core_impl.data.network.models.user.UserWeb
+import utils.exceptions.UnauthorizedException
 
 
 class NetworkRepositoryImplTest {

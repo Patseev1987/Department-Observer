@@ -1,6 +1,7 @@
 package ru.bogdan.core_impl.data.network
 
 import data.NetworkRepository
+import data.TokenResponse
 import domain.info.Info
 import domain.mechanic.Machine
 import domain.user.LoginResponse
@@ -21,12 +22,8 @@ class NetworkRepositoryImpl @Inject constructor(
         return runCatching { mapperWeb.loginResponseFromWeb(client.login(login, passwordHash)) }
     }
 
-    override suspend fun logout() {
-        client.logout()
-    }
-
-    override suspend fun refreshToken(): Result<User> {
-        TODO("Not yet implemented")
+    override suspend fun refreshToken(refreshToken: String): Result<TokenResponse> {
+        return runCatching { mapperWeb.tokenResponseFromWeb(client.refreshToken(refreshToken)) }
     }
 
     override suspend fun getUserById(userId: String): Result<User> {

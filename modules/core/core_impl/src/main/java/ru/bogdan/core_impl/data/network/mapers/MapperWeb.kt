@@ -1,5 +1,6 @@
 package ru.bogdan.core_impl.data.network.mapers
 
+import data.TokenResponse
 import domain.info.Info
 import domain.mechanic.Machine
 import domain.mechanic.MachineDocument
@@ -13,6 +14,7 @@ import ru.bogdan.core_impl.data.network.models.mechanic.MachineWeb
 import ru.bogdan.core_impl.data.network.models.mechanic.OilWeb
 import ru.bogdan.core_impl.data.network.models.mechanic.PartOfMachineWeb
 import ru.bogdan.core_impl.data.network.models.user.LoginResponseWeb
+import ru.bogdan.core_impl.data.network.models.user.TokenResponseWeb
 import ru.bogdan.core_impl.data.network.models.user.UserWeb
 
 class MapperWeb {
@@ -106,5 +108,10 @@ class MapperWeb {
         id = info.id,
         name = info.name,
         info = info.info,
+    )
+
+    fun tokenResponseFromWeb(token: TokenResponseWeb) = TokenResponse(
+        accessToken = token.accessToken,
+        refreshToken = token.refreshToken
     )
 }

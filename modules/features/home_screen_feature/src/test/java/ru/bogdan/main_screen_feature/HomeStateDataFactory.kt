@@ -26,22 +26,22 @@ object HomeStateDataFactory {
         )
     )
 
- fun getInfoAboutMachines(): List<InfoAboutMachines> {
-     val machines = getMachines().getOrThrow()
-     val tempInfo = mutableListOf<InfoAboutMachines>()
-     val angle = WHOLE_CIRCLE / machines.size
-     MachineState.entries.forEach { state ->
-         val count = machines.count { it.state == state }
-         tempInfo.add(
-             InfoAboutMachines(
-                 state = state,
-                 percentage = count * angle,
-                 title = "Working",
-                 color = state.getColor(),
-                 count = count
-             )
-         )
-     }
-     return tempInfo
- }
+    fun getInfoAboutMachines(): List<InfoAboutMachines> {
+        val machines = getMachines().getOrThrow()
+        val tempInfo = mutableListOf<InfoAboutMachines>()
+        val angle = WHOLE_CIRCLE / machines.size
+        MachineState.entries.forEach { state ->
+            val count = machines.count { it.state == state }
+            tempInfo.add(
+                InfoAboutMachines(
+                    state = state,
+                    percentage = count * angle,
+                    title = "Working",
+                    color = state.getColor(),
+                    count = count
+                )
+            )
+        }
+        return tempInfo
+    }
 }

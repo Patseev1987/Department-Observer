@@ -1,6 +1,10 @@
 package ru.bogdan.core_impl.data.network
 
 import io.ktor.client.plugins.api.*
+import utils.exceptions.BadRequestException
+import utils.exceptions.ForbiddenException
+import utils.exceptions.ServerErrorException
+import utils.exceptions.UnauthorizedException
 
 val HttpCodesHandlerPlugin = createClientPlugin("HttpCodesHandlerPlugin") {
     onResponse {

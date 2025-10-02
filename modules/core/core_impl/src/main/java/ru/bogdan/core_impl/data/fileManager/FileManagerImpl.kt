@@ -28,11 +28,6 @@ class FileManagerImpl @Inject constructor(private val context: Context) : FileMa
         }
     }
 
-    override fun saveFileInInternalStorage(fileName: String, bytes: ByteArray) {
-        val dir = context.getExternalFilesDir(null)
-        val file = File(dir, fileName)
-    }
-
     override fun isExternalStorageWritable(): Boolean {
         return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
     }

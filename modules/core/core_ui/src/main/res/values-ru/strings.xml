@@ -12,7 +12,7 @@
     <string name="home_item">Главная</string>
     <string name="role_mechanic">Механик</string>
     <string name="role_manager">Менеджер</string>
-    <string name="list_of_repair_machines">Список неработСписок ремонтируемого оборудования</string>
+    <string name="list_of_repair_machines">Список ремонтируемого оборудования</string>
     <string name="news">Последние новости</string>
     <string name="turning">Токарный</string>
     <string name="turning_cnc">Токарный с ЧПУ</string>

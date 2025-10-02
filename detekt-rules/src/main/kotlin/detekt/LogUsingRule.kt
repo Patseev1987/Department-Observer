@@ -1,19 +1,12 @@
 package detekt
 
-import io.gitlab.arturbosch.detekt.api.CodeSmell
-import io.gitlab.arturbosch.detekt.api.Config
-import io.gitlab.arturbosch.detekt.api.Debt
-import io.gitlab.arturbosch.detekt.api.DetektVisitor
-import io.gitlab.arturbosch.detekt.api.Entity
-import io.gitlab.arturbosch.detekt.api.Issue
-import io.gitlab.arturbosch.detekt.api.Rule
-import io.gitlab.arturbosch.detekt.api.Severity
+import io.gitlab.arturbosch.detekt.api.*
 import io.gitlab.arturbosch.detekt.rules.hasAnnotation
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.psi.KtNamedFunction
 
-class LogUsingRule(config: Config): Rule(config) {
+class LogUsingRule(config: Config) : Rule(config) {
     override val issue: Issue = Issue(
         javaClass.simpleName,
         Severity.CodeSmell,
@@ -51,6 +44,7 @@ class LogUsingRule(config: Config): Rule(config) {
                             )
                         )
                     }
+
                     callText.contains("Log.d(") -> {
                         report(
                             CodeSmell(

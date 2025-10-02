@@ -20,6 +20,8 @@ import ru.bogdan.core_impl.BuildConfig
 import ru.bogdan.core_impl.data.network.models.info.InfoWeb
 import ru.bogdan.core_impl.data.network.models.mechanic.MachineWeb
 import ru.bogdan.core_impl.data.network.models.user.LoginResponseWeb
+import ru.bogdan.core_impl.data.network.models.user.RefreshTokenResponse
+import ru.bogdan.core_impl.data.network.models.user.TokenResponseWeb
 import ru.bogdan.core_impl.data.network.models.user.UserWeb
 import javax.inject.Inject
 
@@ -75,10 +77,14 @@ class NetWorkClientApplication @Inject constructor(
         return response.body()
     }
 
-    suspend fun logout() = httpClient.delete("$BASE_URL/logout")
+    suspend fun refreshToken(refreshToken: String): TokenResponseWeb {
+        val body = RefreshTokenResponse(refreshToken)
 
-    suspend fun refreshToken() = httpClient.post("$BASE_URL/token/refresh") {
-        //TODO
+        val response = httpClient.post("$BASE_URL/auth/refresh-token") {
+            contentType(ContentType.Application.Json)
+            setBody(body)
+        }
+        return response.body()
     }
 
 

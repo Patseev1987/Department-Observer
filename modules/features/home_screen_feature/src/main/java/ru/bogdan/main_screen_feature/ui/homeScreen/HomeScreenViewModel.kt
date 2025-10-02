@@ -17,6 +17,7 @@ import kotlinx.coroutines.withContext
 import ru.bogdan.core_ui.R
 import ru.bogdan.core_ui.ui.common.extansions.getColor
 import utils.SingleSharedFlow
+import utils.exceptions.UnauthorizedException
 import javax.inject.Inject
 
 class HomeScreenViewModel @Inject constructor(
@@ -78,10 +79,23 @@ class HomeScreenViewModel @Inject constructor(
                     }
                 }
                     .onFailure { throwable ->
-                        _uiAction.emit(HomeScreenUiAction.ShowToast(throwable.message ?: ""))
+                        throw throwable
                     }
             }
                 .onFailure { throwable ->
+                    if (throwable is UnauthorizedException) {
+                        networkRepository.refreshToken(dataStoreManager.refreshToken.first() ?: "")
+                            .onSuccess { responseToken ->
+                                dataStoreManager.saveAccessTokens(
+                                    responseToken.accessToken,
+                                    responseToken.refreshToken
+                                )
+                            }.onFailure { _ ->
+                                _uiAction.emit(HomeScreenUiAction.GoToLoginScreen)
+                                _state.update { it.copy(isLoading = false) }
+                            }
+                    }
+                    _state.update { it.copy(isLoading = false) }
                     _uiAction.emit(HomeScreenUiAction.ShowToast(throwable.message ?: ""))
                 }
         }

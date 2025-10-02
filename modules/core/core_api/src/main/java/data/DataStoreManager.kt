@@ -11,7 +11,7 @@ interface DataStoreManager {
 
     val userId: Flow<String?>
 
-    suspend fun saveAccessTokens(accessToken: String?, refreshToken: String?, userId: String?)
+    suspend fun saveAccessTokens(accessToken: String?, refreshToken: String?, userId: String? = null)
 
     suspend fun clear()
 

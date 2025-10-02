@@ -9,9 +9,7 @@ interface NetworkRepository {
 
     suspend fun login(login: String, password: String): Result<LoginResponse>
 
-    suspend fun logout()
-
-    suspend fun refreshToken(): Result<User>
+    suspend fun refreshToken(refreshToken: String): Result<TokenResponse>
 
     suspend fun getUserById(userId: String): Result<User>
 

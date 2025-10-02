@@ -30,7 +30,7 @@ object RepositoryDataFactory {
         Info("3", "c", info[2]),
     )
 
-  private  val info = listOf(
+    private val info = listOf(
         "1. Helo",
         "2. GoodBay",
         "3. Welcome"

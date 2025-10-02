@@ -91,7 +91,7 @@ class MachineDetailsViewModel @Inject constructor(
             }
 
             is MachineDetailsIntent.SaveDoc -> {
-                  if (doc == MachineDocument.NONE) return
+                if (doc == MachineDocument.NONE) return
                 saveFileToDownload(fileManager, doc)
                 doc = MachineDocument.NONE
                 _state.update {

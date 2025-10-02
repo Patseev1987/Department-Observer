@@ -33,8 +33,8 @@ fun Application(modifier: Modifier = Modifier) {
                                 if (!(currentDestination?.any { it.hasRoute(item.route::class) } ?: false)) {
                                     navController.navigate(item.route) {
                                         launchSingleTop = true
-                                        popUpTo(NavigationEvent.Home::class) {
-                                            inclusive = true
+                                        popUpTo(NavigationEvent.Home::class){
+                                            inclusive = false
                                         }
                                     }
                                 }

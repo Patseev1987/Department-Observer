@@ -53,10 +53,4 @@ dependencies {
     implementation(libs.ktor.client.auth)
     implementation(libs.ktor.logging)
     testImplementation(libs.ktor.client.test)
-
-    //Room
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
-    implementation(libs.room.runtime)
-    testImplementation(libs.room.test)
 }

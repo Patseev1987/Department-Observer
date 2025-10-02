@@ -84,8 +84,7 @@ fun LoginScreen(
                 .loadingShimmer(showShimmer = state.value.isLoading, color = Emerald, gradientWidth = 40.dp.value)
                 .background(color = Color.Transparent)
                 .padding(spacing.medium)
-                .testTag("Login Screen")
-            ,
+                .testTag("Login Screen"),
         ) {
 
             Box(
@@ -197,9 +196,10 @@ fun PasswordTextField(
                 )
             }
             BasicTextField(
-                modifier = Modifier.onFocusChanged { focusState ->
-                    isFocused = focusState.isFocused
-                }
+                modifier = Modifier
+                    .onFocusChanged { focusState ->
+                        isFocused = focusState.isFocused
+                    }
                     .testTag("password_field"),
                 value = value,
                 onValueChange = onValueChange,
@@ -286,9 +286,10 @@ fun LoginTextField(
             }
 
             BasicTextField(
-                modifier = Modifier.onFocusChanged { focusState ->
-                    isFocused = focusState.isFocused
-                }
+                modifier = Modifier
+                    .onFocusChanged { focusState ->
+                        isFocused = focusState.isFocused
+                    }
                     .testTag("login_field"),
                 value = value,
                 onValueChange = onValueChange,

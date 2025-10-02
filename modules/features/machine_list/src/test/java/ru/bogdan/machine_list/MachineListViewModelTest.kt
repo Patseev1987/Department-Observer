@@ -96,10 +96,10 @@ class MachineListViewModelTest {
         vm.handleIntent(MachineListIntent.SetMachineStateFilter(MachineState.REPAIR))
         advanceUntilIdle()
         vm.handleIntent(MachineListIntent.ApplyFilters)
-        assertEquals(2,vm.state.value.machines.size)
+        assertEquals(2, vm.state.value.machines.size)
         vm.handleIntent(MachineListIntent.DropFilters)
         advanceUntilIdle()
-        assertEquals(4,vm.state.value.machines.size)
+        assertEquals(4, vm.state.value.machines.size)
     }
 
     @Test

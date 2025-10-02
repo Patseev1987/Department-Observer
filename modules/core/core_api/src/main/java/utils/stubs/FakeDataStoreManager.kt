@@ -4,17 +4,17 @@ import data.DataStoreManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-object FakeDataStoreManager: DataStoreManager {
+object FakeDataStoreManager : DataStoreManager {
     override val accessToken: Flow<String?>
-        get() = flow{
+        get() = flow {
             emit("112233")
         }
     override val refreshToken: Flow<String?>
-        get() = flow{
+        get() = flow {
             emit("445566")
         }
     override val userId: Flow<String?>
-        get() = flow{
+        get() = flow {
             emit("user1")
         }
 

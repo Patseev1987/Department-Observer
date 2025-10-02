@@ -45,6 +45,14 @@ fun AppNavGraph(
 
         composable<NavigationEvent.Home> {
             HomeScreen(
+                { event ->
+                    navHostController.navigate(event) {
+                        launchSingleTop = true
+                        popUpTo(NavigationEvent.LoginScreen::class){
+                            inclusive = false
+                        }
+                    }
+                },
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),

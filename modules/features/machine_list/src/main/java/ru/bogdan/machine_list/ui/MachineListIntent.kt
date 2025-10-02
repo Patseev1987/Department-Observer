@@ -1,6 +1,8 @@
 package ru.bogdan.machine_list.ui
 
-import domain.mechanic.*
+import domain.mechanic.MachineModel
+import domain.mechanic.MachineState
+import domain.mechanic.MachineType
 
 sealed interface MachineListIntent {
     data class SetMachineStateFilter(val state: MachineState) : MachineListIntent

@@ -25,8 +25,14 @@ fun NavGraphBuilder.machineGraph(
                     .padding(paddingValues),
                 onMachineClick = {
                     val id = it.machineId
-                    navHostController.navigate(NavigationEvent.MachineScreen(id)) {
+                    navHostController.navigate(NavigationEvent.MachineScreen(id))
+                },
+                onNavigateEvent = {event->
+                    navHostController.navigate(event) {
                         launchSingleTop = true
+                        popUpTo(NavigationEvent.LoginScreen::class){
+                            inclusive = false
+                        }
                     }
                 }
             )

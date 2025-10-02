@@ -1,5 +1,6 @@
 package ru.bogdan.main_screen_feature.ui.homeScreen
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -15,14 +16,17 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -34,6 +38,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import domain.mechanic.MachineType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import navigation.NavigationEvent
 import ru.bogdan.core_ui.R
 import ru.bogdan.core_ui.ui.common.box.BoxWithBackgroundPhoto
 import ru.bogdan.core_ui.ui.common.loadingModifier.loadingShimmer
@@ -45,12 +52,34 @@ import ru.bogdan.main_screen_feature.ui.homeScreen.userCard.UserCard
 import ru.bogdan.main_screen_feature.utils.getHomeScreenComponent
 
 @Composable
-fun HomeScreen(modifier: Modifier) {
+fun HomeScreen(
+    onNavigateEvent: (NavigationEvent.LoginScreen) -> Unit,
+    modifier: Modifier
+) {
     val component = getHomeScreenComponent()
     val viewModel: HomeScreenViewModel = viewModel(factory = component.getViewModelFactory())
     val state = viewModel.state.collectAsState()
     val typography = LocalAppTypography.current
     val spacing = LocalSpacing.current
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.uiAction.collect { action ->
+            when (action) {
+                is HomeScreenUiAction.GoToLoginScreen -> {
+                    onNavigateEvent(NavigationEvent.LoginScreen)
+                }
+
+                is HomeScreenUiAction.ShowToast -> {
+                    scope.launch(Dispatchers.Main) {
+                        Toast.makeText(context, action.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
     BoxWithBackgroundPhoto(
         drawableId = R.drawable.user_card,
     ) {
@@ -80,7 +109,9 @@ fun HomeScreen(modifier: Modifier) {
                     }
                     item {
                         PaiChart(
-                            modifier = Modifier.fillMaxWidth().testTag("pai_chart"),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .testTag("pai_chart"),
                             state = state,
                         ) {
                             viewModel.handleIntent(HomeScreenIntent.ShowRepairList(it))
@@ -89,7 +120,9 @@ fun HomeScreen(modifier: Modifier) {
 
                     item {
                         InfoList(
-                            modifier = Modifier.fillMaxWidth().testTag("info_list"),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .testTag("info_list"),
                             state = state,
                             onClick = { viewModel.handleIntent(HomeScreenIntent.ShowInfoList(it)) }
                         )
@@ -371,7 +404,9 @@ fun InfoList(
             ) {
                 item {
                     Text(
-                        modifier = Modifier.fillMaxWidth().testTag("news"),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag("news"),
                         text = stringResource(R.string.info_news),
                         textAlign = TextAlign.Center,
                         style = typography.bodyNormal,

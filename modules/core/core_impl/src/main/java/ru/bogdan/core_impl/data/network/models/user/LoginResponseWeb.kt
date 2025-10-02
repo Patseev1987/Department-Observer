@@ -4,13 +4,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginResponseWeb (
+data class LoginResponseWeb(
     val username: String,
     val userId: String,
     val token: String? = null,
     @SerialName("refresh_token")
     val refreshToken: String? = null
-){
+) {
     companion object {
         val NONE = LoginResponseWeb(
             username = "Ivan",

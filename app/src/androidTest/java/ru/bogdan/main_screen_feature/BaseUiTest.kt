@@ -24,7 +24,7 @@ abstract class BaseUiTest : TestCase(
     protected val compose = KakaoComposeTestRule(composeTestRule)
 
     protected fun setComposeContent(content: @Composable () -> Unit) {
-        composeTestRule.activity.setContent{
+        composeTestRule.activity.setContent {
             content()
         }
     }
