@@ -66,7 +66,7 @@ class UiTEst : BaseUiTest() {
     fun testHomeScreens() = run {
         setComposeContent {
             DepartmentObserverTheme {
-                HomeScreen(Modifier.fillMaxSize())
+                HomeScreen({},Modifier.fillMaxSize())
             }
         }
 

@@ -37,17 +37,17 @@ class MachineDetailViewModelTest {
         model = it.model.name,
         imageUrl = it.imageUrl,
         description = it.description,
-        state = "Hello String",
-        type = "Hello String",
+        state = "Working",
+        type = "Working",
         yearOfManufacture = it.yearOfManufacture,
         parts = it.parts,
         docs = it.docs,
         oils = it.oils,
         color = it.state.getColor(),
         states = listOf(
-            "Hello String",
-            "Hello String",
-            "Hello String"
+            "Working",
+            "Working",
+            "Working"
         ),
     )
 

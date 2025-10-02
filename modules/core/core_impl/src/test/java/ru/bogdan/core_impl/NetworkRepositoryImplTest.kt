@@ -29,12 +29,12 @@ class NetworkRepositoryImplTest {
 
     @Test
     fun loginTest() = runTest {
-        //given
+
         whenever(client.login(anyString(), anyString())).thenReturn(LoginResponseWeb.NONE)
         val expected = LoginResponse.NONE
-        //when
+
         val actual = repository.login("asd", "123").getOrNull()
-        //then
+
         assertEquals(expected, actual)
         verify(client).login(anyString(), anyString())
     }
@@ -42,26 +42,26 @@ class NetworkRepositoryImplTest {
 
     @Test
     fun getUserByIdTestPositive() = runTest {
-        //given
+
         whenever(client.getUserById(anyString())).thenReturn(UserWeb.NONE)
         val expected = User.NONE
-        //when
+
         val actual = repository.getUserById("asd").getOrNull()
-        //then
+
         assertEquals(expected, actual)
         verify(client).getUserById(anyString())
     }
 
     @Test
     fun getUserByIdTestNegative() = runTest {
-        //given
+
         whenever(client.getUserById("123")).thenThrow(UnauthorizedException())
         val expected = "Unauthorized"
-        //when
+
         try {
             repository.getUserById("123").getOrNull()
         } catch (e: UnauthorizedException) {
-            //then
+
             assertEquals(expected, e.message)
             verify(client).getUserById(anyString())
         }

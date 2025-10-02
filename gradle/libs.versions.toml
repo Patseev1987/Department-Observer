@@ -14,7 +14,6 @@ appcompat = "1.7.1"
 jetbrainsKotlinJvm = "2.2.10"
 kspVersion = "2.1.21-2.0.1"
 mockitoKotlin = "6.0.0"
-room = "2.7.2"
 ktorVersion = "3.2.3"
 coil = "3.3.0"
 navCompose = "2.9.3"
@@ -67,10 +66,6 @@ dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 daggerCompiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
-room-test = { module = "androidx.room:room-testing", version.ref = "room" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
