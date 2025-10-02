@@ -20,6 +20,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import ru.bogdan.machine_list.ui.MachineListIntent
 import ru.bogdan.machine_list.ui.MachineListViewModel
+import utils.stubs.FakeDataStoreManager
 import utils.stubs.FakeResourcesManager
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -48,7 +49,8 @@ class MachineListViewModelTest {
             vm = MachineListViewModel(
                 networkRepository = networkRepository,
                 dispatcher = dispatcher,
-                resourceManager = FakeResourcesManager
+                resourceManager = FakeResourcesManager,
+                dataStoreManager = FakeDataStoreManager
             )
             advanceUntilIdle()
         }
