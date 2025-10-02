@@ -15,6 +15,7 @@ class LibraryPlugin : Plugin<Project> {
                 apply(libs.plugins.kotlin.compose.get().pluginId)
                 apply(libs.plugins.serialization.get().pluginId)
                 apply(libs.plugins.ksp.get().pluginId)
+                apply(libs.plugins.detect.get().pluginId)
                 apply("patseev.android.config")
             }
             androidConfig {

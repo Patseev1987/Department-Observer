@@ -8,7 +8,7 @@ import di.CoreProvider
 
 @AppScope
 @Component(
-    modules = [NetworkModule::class, DataStoreModule::class, DataBaseModule::class, ResourceManagerModule::class],
+    modules = [NetworkModule::class, DataStoreModule::class, ResourceManagerModule::class],
 )
 interface CoreComponent : CoreProvider {
 

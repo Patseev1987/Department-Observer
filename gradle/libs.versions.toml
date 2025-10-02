@@ -30,6 +30,10 @@ targetSdk = "36"
 minSdk = "28"
 versionCode = "1"
 versionName = "1.0"
+detekt = "1.23.8"
+kotest = "5.9.1"
+jupiter = "5.11.4"
+jreleaser = "1.16.0"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
@@ -75,6 +79,10 @@ gradleplugin-compose = { module = "org.jetbrains.compose:compose-gradle-plugin",
 gradleplugin-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 gradleplugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradleplugin-api = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }
+detekt-api = { module = "io.gitlab.arturbosch.detekt:detekt-api", version.ref = "detekt" }
+detekt-test = { module = "io.gitlab.arturbosch.detekt:detekt-test", version.ref = "detekt" }
+kotest = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "jupiter" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -85,6 +93,8 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJv
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktorVersion" }
+detect = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+jreleaser = { id = "org.jreleaser", version.ref = "jreleaser" }
 
 
 patseev-plugin-app = { id = "patseev-appPlugin" }

@@ -2,6 +2,11 @@ plugins {
     alias(libs.plugins.patseev.plugin.app)
 }
 
+detekt {
+    toolVersion = libs.versions.detekt.get()
+    config.setFrom(files("../config/detekt/detekt.yml","$rootDir/detekt-rules/src/main/resources/config.yml"))
+    buildUponDefaultConfig = true
+}
 
 android {
     namespace = "ru.bogdan.departmentobserver"
@@ -53,4 +58,7 @@ dependencies {
     androidTestImplementation("androidx.test:rules:1.7.0")
     androidTestImplementation("androidx.test:runner:1.7.0")
     androidTestImplementation("androidx.test.ext:junit-ktx:1.3.0")
+
+    //detekt
+    detektPlugins(project(":detekt-rules"))
 }

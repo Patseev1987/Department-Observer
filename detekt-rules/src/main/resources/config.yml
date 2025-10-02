@@ -1,0 +1,3 @@
+ObserverRuleSet:
+  LogUsingRule:
+    active: true

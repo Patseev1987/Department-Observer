@@ -1,5 +1,6 @@
 package ru.bogdan.departmentobserver.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,7 @@ fun AppNavGraph(
 
     NavHost(navHostController, startDestination = NavigationEvent.LoginScreen, modifier = modifier) {
         composable<NavigationEvent.LoginScreen> {
+            Log.i("AppNavGraph", "LoginScreen")
             LoginScreen(
                 modifier = Modifier
                     .fillMaxSize()

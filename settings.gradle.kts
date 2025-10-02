@@ -35,3 +35,4 @@ include(":modules:core:core_factory")
 include(":modules:core:core_impl")
 
 include("common-tests")
+include("detekt-rules")

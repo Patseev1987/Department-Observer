@@ -8,8 +8,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 interface CoreProvider {
     fun getNetworkRepository(): NetworkRepository
 
-    fun getADatabaseRepository(): DataBaseRepository
-
     fun getDataStoreManager(): DataStoreManager
 
     fun getAppContext(): Context
