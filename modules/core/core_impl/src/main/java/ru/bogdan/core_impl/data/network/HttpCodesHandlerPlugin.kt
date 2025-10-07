@@ -14,7 +14,7 @@ val HttpCodesHandlerPlugin = createClientPlugin("HttpCodesHandlerPlugin") {
             }
 
             401 -> {
-                throw UnauthorizedException()
+                return@onResponse
             }
 
             403 -> {

@@ -13,15 +13,11 @@ object FakeDataStoreManager : DataStoreManager {
         get() = flow {
             emit("445566")
         }
-    override val userId: Flow<String?>
-        get() = flow {
-            emit("user1")
-        }
 
     override suspend fun saveAccessTokens(
         accessToken: String?,
         refreshToken: String?,
-        userId: String?
+
     ) {
         println("saveAccessTokens")
     }

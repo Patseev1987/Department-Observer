@@ -50,8 +50,7 @@ class LoginViewModel @Inject constructor(
                             .onSuccess { loginResponse ->
                                 dataStoreManager.saveAccessTokens(
                                     loginResponse.token,
-                                    loginResponse.refreshToken,
-                                    loginResponse.userId
+                                    loginResponse.refreshToken
                                 )
                                 _state.update { it.copy(isLoading = false) }
                                 _uiAction.emit(
@@ -63,15 +62,6 @@ class LoginViewModel @Inject constructor(
                                 _uiAction.emit(LoginUiAction.GoToMainScreen)
                             }
                             .onFailure { error ->
-                                if (error is UnauthorizedException) {
-                                    val responseToken =
-                                        networkRepository.refreshToken(dataStoreManager.refreshToken.first() ?: "")
-                                            .getOrThrow()
-                                    dataStoreManager.saveAccessTokens(
-                                        responseToken.accessToken,
-                                        responseToken.refreshToken
-                                    )
-                                }
                                 _uiAction.emit(LoginUiAction.ShowToast(error.message ?: ""))
                                 _state.update { it.copy(isLoading = false) }
                             }

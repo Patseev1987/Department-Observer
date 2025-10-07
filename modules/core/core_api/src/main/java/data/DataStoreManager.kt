@@ -9,9 +9,7 @@ interface DataStoreManager {
 
     val refreshToken: Flow<String?>
 
-    val userId: Flow<String?>
-
-    suspend fun saveAccessTokens(accessToken: String?, refreshToken: String?, userId: String? = null)
+    suspend fun saveAccessTokens(accessToken: String?, refreshToken: String?)
 
     suspend fun clear()
 

@@ -36,7 +36,6 @@ class HomeScreenViewModelTest {
         runTest {
             testDispatcher = UnconfinedTestDispatcher()
             whenever(networkRepository.getInfo()).thenReturn(data.getInfo())
-            whenever(networkRepository.getUserById(any())).thenReturn(data.getUser())
             whenever(networkRepository.getMachines()).thenReturn(data.getMachines())
             viewModel = HomeScreenViewModel(
                 dispatcher = testDispatcher,

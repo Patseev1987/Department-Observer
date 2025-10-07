@@ -1,5 +1,6 @@
 package ru.bogdan.core_impl.data.network
 
+import android.util.Log
 import data.DataStoreManager
 import domain.user.UserRequest
 import io.ktor.client.*
@@ -20,7 +21,6 @@ import ru.bogdan.core_impl.BuildConfig
 import ru.bogdan.core_impl.data.network.models.info.InfoWeb
 import ru.bogdan.core_impl.data.network.models.mechanic.MachineWeb
 import ru.bogdan.core_impl.data.network.models.user.LoginResponseWeb
-import ru.bogdan.core_impl.data.network.models.user.RefreshTokenResponse
 import ru.bogdan.core_impl.data.network.models.user.TokenResponseWeb
 import ru.bogdan.core_impl.data.network.models.user.UserWeb
 import javax.inject.Inject
@@ -38,11 +38,11 @@ class NetWorkClientApplication @Inject constructor(
             connectTimeoutMillis = 5000
         }
 
-        install(HttpCodesHandlerPlugin)
+         install(HttpCodesHandlerPlugin)
 
         install(Logging) {
             logger = Logger.ANDROID
-            level = LogLevel.BODY
+            level = LogLevel.HEADERS
         }
         install(ContentNegotiation) {
             json(
@@ -54,6 +54,7 @@ class NetWorkClientApplication @Inject constructor(
                 }
             )
         }
+
         install(Auth) {
             bearer {
                 loadTokens {
@@ -64,13 +65,27 @@ class NetWorkClientApplication @Inject constructor(
                         refreshToken = refreshToken,
                     )
                 }
+
+                refreshTokens {
+                    oldTokens?.refreshToken?.let {
+                        val tokenResponse = refreshToken(it)
+                        BearerTokens(
+                            accessToken = tokenResponse.accessToken!!,
+                            refreshToken = tokenResponse.refreshToken,
+                        )
+                    }
+                }
+                sendWithoutRequest { request ->
+                    !(request.url.encodedPathSegments.contains("login")
+                            || request.url.encodedPath.contains("/auth/"))
+                }
             }
         }
     }
 
     suspend fun login(login: String, password: String): LoginResponseWeb {
-
         val response = httpClient.post("$BASE_URL/login") {
+            Log.d("NavigationEvent", "Detekt test")
             contentType(ContentType.Application.Json)
             setBody(UserRequest(login, password))
         }
@@ -78,17 +93,15 @@ class NetWorkClientApplication @Inject constructor(
     }
 
     suspend fun refreshToken(refreshToken: String): TokenResponseWeb {
-        val body = RefreshTokenResponse(refreshToken)
-
-        val response = httpClient.post("$BASE_URL/auth/refresh-token") {
-            contentType(ContentType.Application.Json)
-            setBody(body)
+        val response = httpClient.get("$BASE_URL/auth/refresh-token") {
+            takeFrom(this)
+            header("Authorization", "Bearer $refreshToken")
         }
         return response.body()
     }
 
 
-    suspend fun getUserById(id: String) = httpClient.get("$BASE_URL/users/$id").body<UserWeb>()
+    suspend fun getUser() = httpClient.get("$BASE_URL/users/id").body<UserWeb>()
 
     suspend fun getMachines() = httpClient.get("$BASE_URL/machines").body<List<MachineWeb>>()
 
