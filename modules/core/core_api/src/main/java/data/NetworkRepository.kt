@@ -1,5 +1,6 @@
 package data
 
+import domain.TokenResponse
 import domain.info.Info
 import domain.mechanic.Machine
 import domain.user.LoginResponse

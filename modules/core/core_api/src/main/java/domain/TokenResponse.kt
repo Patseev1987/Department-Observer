@@ -1,5 +1,4 @@
-package data
-
+package domain
 
 data class TokenResponse(
     val accessToken: String?,

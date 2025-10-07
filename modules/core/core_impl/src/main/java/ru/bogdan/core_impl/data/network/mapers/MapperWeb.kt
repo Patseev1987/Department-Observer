@@ -1,6 +1,6 @@
 package ru.bogdan.core_impl.data.network.mapers
 
-import data.TokenResponse
+import domain.TokenResponse
 import domain.info.Info
 import domain.mechanic.Machine
 import domain.mechanic.MachineDocument

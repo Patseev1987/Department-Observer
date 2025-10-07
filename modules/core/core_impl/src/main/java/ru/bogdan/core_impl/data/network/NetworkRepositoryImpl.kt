@@ -1,7 +1,7 @@
 package ru.bogdan.core_impl.data.network
 
 import data.NetworkRepository
-import data.TokenResponse
+import domain.TokenResponse
 import domain.info.Info
 import domain.mechanic.Machine
 import domain.user.LoginResponse
