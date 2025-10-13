@@ -4,7 +4,7 @@ plugins {
 
 detekt {
     toolVersion = libs.versions.detekt.get()
-    config.setFrom(files("../config/detekt/detekt.yml", "$rootDir/detekt-rules/src/main/resources/config.yml"))
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml", "$rootDir/detekt-rules/src/main/resources/config.yml"))
     buildUponDefaultConfig = true
 }
 

@@ -216,18 +216,7 @@ class MachineListViewModel @Inject constructor(
                             )
                         )
                     }.onFailure {
-                        if (it is UnauthorizedException) {
-                            networkRepository.refreshToken(dataStoreManager.refreshToken.first() ?: "")
-                                .onSuccess { responseToken ->
-                                    dataStoreManager.saveAccessTokens(
-                                        responseToken.accessToken,
-                                        responseToken.refreshToken
-                                    )
-                                }.onFailure { _ ->
-                                    _uiAction.emit(MachineListUiAction.GoToLoginScreen)
-                                    _state.update { it.copy(isLoading = false) }
-                                }
-                        }
+                        _uiAction.emit(MachineListUiAction.GoToLoginScreen)
                         _state.update { it.copy(isLoading = false) }
                     }
             }

@@ -12,7 +12,7 @@ interface NetworkRepository {
 
     suspend fun refreshToken(refreshToken: String): Result<TokenResponse>
 
-    suspend fun getUserById(userId: String): Result<User>
+    suspend fun getUser(): Result<User>
 
     suspend fun getMachines(): Result<List<Machine>>
 

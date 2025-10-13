@@ -1,5 +1,6 @@
 package ru.bogdan.main_screen_feature.ui.homeScreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.DataStoreManager
@@ -17,7 +18,6 @@ import kotlinx.coroutines.withContext
 import ru.bogdan.core_ui.R
 import ru.bogdan.core_ui.ui.common.extansions.getColor
 import utils.SingleSharedFlow
-import utils.exceptions.UnauthorizedException
 import javax.inject.Inject
 
 class HomeScreenViewModel @Inject constructor(
@@ -38,7 +38,7 @@ class HomeScreenViewModel @Inject constructor(
     val uiAction = _uiAction.asSharedFlow()
 
     init {
-        prepareData(dataStoreManager)
+        prepareData()
     }
 
     fun handleIntent(intent: HomeScreenIntent) {
@@ -53,9 +53,8 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    private fun prepareData(dataStoreManager: DataStoreManager) = viewModelScope.launch {
-        val userId = dataStoreManager.userId.first() ?: ""
-        val tempUser = async { networkRepository.getUserById(userId) }
+    private fun prepareData() = viewModelScope.launch {
+        val tempUser = async { networkRepository.getUser() }
         val tempMachines = async { networkRepository.getMachines() }
         val tempInfo = async { networkRepository.getInfo() }
         withContext(dispatcher) {
@@ -83,18 +82,6 @@ class HomeScreenViewModel @Inject constructor(
                     }
             }
                 .onFailure { throwable ->
-                    if (throwable is UnauthorizedException) {
-                        networkRepository.refreshToken(dataStoreManager.refreshToken.first() ?: "")
-                            .onSuccess { responseToken ->
-                                dataStoreManager.saveAccessTokens(
-                                    responseToken.accessToken,
-                                    responseToken.refreshToken
-                                )
-                            }.onFailure { _ ->
-                                _uiAction.emit(HomeScreenUiAction.GoToLoginScreen)
-                                _state.update { it.copy(isLoading = false) }
-                            }
-                    }
                     _state.update { it.copy(isLoading = false) }
                     _uiAction.emit(HomeScreenUiAction.ShowToast(throwable.message ?: ""))
                 }

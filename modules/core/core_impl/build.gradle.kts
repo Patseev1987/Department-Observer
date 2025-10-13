@@ -1,7 +1,13 @@
 plugins {
     alias(libs.plugins.patseev.plugin.library)
+    alias(libs.plugins.detect)
 }
 
+detekt {
+    toolVersion = libs.versions.detekt.get()
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml", "$rootDir/detekt-rules/src/main/resources/config.yml"))
+    buildUponDefaultConfig = true
+}
 
 android {
     namespace = "ru.bogdan.core_impl"
@@ -53,4 +59,6 @@ dependencies {
     implementation(libs.ktor.client.auth)
     implementation(libs.ktor.logging)
     testImplementation(libs.ktor.client.test)
+
+    detektPlugins(project(":detekt-rules"))
 }

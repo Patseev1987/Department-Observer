@@ -4,6 +4,7 @@ import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
+import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -83,21 +84,10 @@ class DataStoreManagerImpl @Inject constructor(private val context: Context) : D
             } else EMPTY_STRING
         }
 
-    override val userId: Flow<String?>
-        get() = context.dataStore.data.map { preferences ->
-            val userId = preferences[USER_ID] ?: EMPTY_STRING
-            if (userId.isNotBlank()) {
-                decrypt(userId)
-            } else {
-                EMPTY_STRING
-            }
-        }
-
-    override suspend fun saveAccessTokens(accessToken: String?, refreshToken: String?, userId: String?) {
+    override suspend fun saveAccessTokens(accessToken: String?, refreshToken: String?) {
         context.dataStore.edit { preferences ->
             accessToken?.let { preferences[ACCESS_TOKEN] = encrypt(it) }
             refreshToken?.let { preferences[REFRESH_TOKEN] = encrypt(it) }
-            userId?.let { preferences[USER_ID] = encrypt(it) }
         }
     }
 
@@ -111,7 +101,6 @@ class DataStoreManagerImpl @Inject constructor(private val context: Context) : D
         private val Context.dataStore by preferencesDataStore(name = dataStoreFile)
         private val ACCESS_TOKEN = stringPreferencesKey("key_access_token")
         private val REFRESH_TOKEN = stringPreferencesKey("key_refresh_token")
-        private val USER_ID = stringPreferencesKey("user_id")
         private const val EMPTY_STRING = ""
     }
 }

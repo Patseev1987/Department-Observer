@@ -39,34 +39,6 @@ class NetworkRepositoryImplTest {
         verify(client).login(anyString(), anyString())
     }
 
-
-    @Test
-    fun getUserByIdTestPositive() = runTest {
-
-        whenever(client.getUserById(anyString())).thenReturn(UserWeb.NONE)
-        val expected = User.NONE
-
-        val actual = repository.getUserById("asd").getOrNull()
-
-        assertEquals(expected, actual)
-        verify(client).getUserById(anyString())
-    }
-
-    @Test
-    fun getUserByIdTestNegative() = runTest {
-
-        whenever(client.getUserById("123")).thenThrow(UnauthorizedException())
-        val expected = "Unauthorized"
-
-        try {
-            repository.getUserById("123").getOrNull()
-        } catch (e: UnauthorizedException) {
-
-            assertEquals(expected, e.message)
-            verify(client).getUserById(anyString())
-        }
-    }
-
     @Test
     fun getMachinesTest() = runTest {
         whenever(client.getMachines()).thenReturn(RepositoryDataFactory.getMachinesWeb())

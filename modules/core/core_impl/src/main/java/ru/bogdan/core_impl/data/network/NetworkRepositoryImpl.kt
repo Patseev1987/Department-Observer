@@ -26,10 +26,10 @@ class NetworkRepositoryImpl @Inject constructor(
         return runCatching { mapperWeb.tokenResponseFromWeb(client.refreshToken(refreshToken)) }
     }
 
-    override suspend fun getUserById(userId: String): Result<User> {
+    override suspend fun getUser(): Result<User> {
         return runCatching {
             mapperWeb.userFromWeb(
-                client.getUserById(userId)
+                client.getUser()
             )
         }
     }

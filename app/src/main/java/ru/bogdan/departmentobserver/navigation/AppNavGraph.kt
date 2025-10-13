@@ -24,12 +24,12 @@ fun AppNavGraph(
 
     NavHost(navHostController, startDestination = NavigationEvent.LoginScreen, modifier = modifier) {
         composable<NavigationEvent.LoginScreen> {
-            Log.i("AppNavGraph", "LoginScreen")
             LoginScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
                 onNavigateEvent = { event ->
+                    Log.d("NavigationEvent", "Detekt test")
                     navHostController.navigate(event) {
                         launchSingleTop = true
                         popUpTo(NavigationEvent.LoginScreen::class) { inclusive = true }
